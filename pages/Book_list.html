@@ -201,7 +201,8 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search...">
                         <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                        <button class="btn btn-default" type="button"><i
+                                class="glyphicon glyphicon-search"></i></button>
                     </span>
                     </div><!-- /input-group -->
                 </div><!-- /.col-lg-6 -->
@@ -224,31 +225,37 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td> <img width="90" alt="iPhone" src="plugins/images/books/book1.jpg"> </td>
+                                <td><img width="90" alt="iPhone" src="plugins/images/books/book1.jpg"></td>
                                 <td>Wooden Chair</td>
                                 <td>北京师范大学出版社</td>
                                 <td>35￥</td>
                                 <td>25</td>
                                 <td>09-7-2017</td>
-                                <td><a title="" class="text-inverse p-r-10" href="./Book_details.html" data-toggle="tooltip" data-original-title="Detail"><i class="glyphicon glyphicon-book"></i></a> </td>
+                                <td><a title="" class="text-inverse p-r-10" href="./Book_details.html"
+                                       data-toggle="tooltip" data-original-title="Detail"><i
+                                        class="glyphicon glyphicon-book"></i></a></td>
                             </tr>
                             <tr>
-                                <td> <img width="90" alt="apple_watch" src="plugins/images/books/book1.jpg"> </td>
+                                <td><img width="90" alt="apple_watch" src="plugins/images/books/book1.jpg"></td>
                                 <td>Gray Chair</td>
                                 <td>北京师范大学出版社</td>
                                 <td>35￥</td>
                                 <td>12</td>
                                 <td>08-7-2017</td>
-                                <td><a title="" class="text-inverse p-r-10" href="./Book_details.html" data-toggle="tooltip" data-original-title="Detail"><i class="glyphicon glyphicon-book"></i></a> </td>
+                                <td><a title="" class="text-inverse p-r-10" href="./Book_details.html"
+                                       data-toggle="tooltip" data-original-title="Detail"><i
+                                        class="glyphicon glyphicon-book"></i></a></td>
                             </tr>
                             <tr>
-                                <td> <img width="90" alt="mac_mouse" src="plugins/images/books/book1.jpg"> </td>
+                                <td><img width="90" alt="mac_mouse" src="plugins/images/books/book1.jpg"></td>
                                 <td>Pure Wooden chair</td>
                                 <td>北京师范大学出版社</td>
                                 <td>35￥</td>
                                 <td>18</td>
                                 <td>02-7-2017</td>
-                                <td><a title="" class="text-inverse p-r-10" href="./Book_details.html" data-toggle="tooltip" data-original-title="Detail"><i class="glyphicon glyphicon-book"></i></a> </td>
+                                <td><a title="" class="text-inverse p-r-10" href="./Book_details.html"
+                                       data-toggle="tooltip" data-original-title="Detail"><i
+                                        class="glyphicon glyphicon-book"></i></a></td>
                             </tr>
                             </tbody>
                         </table>
@@ -280,7 +287,19 @@
 <script src="js/custom.min.js"></script>
 <!--Style Switcher -->
 <script src="bower_components/jQuery.style.switcher.js"></script>
-
+<!-- Self Script -->
+<script>
+    $(document).ready(function () {
+        $("tr").on('click', function () {
+            if ($(this).attr("style") === "color:red") {
+                $(this).attr("style", "color:black");
+            }
+            else {
+                $(this).attr("style", "color:red");
+            }
+        })
+    });
+</script>
 </body>
 
 </html>
