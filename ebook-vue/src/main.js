@@ -3,11 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import iView from 'iview'  //引入ivew库
+import 'iview/dist/styles/iview.css'  // 使用 CSS
 
-// jquery and bootstrap
-import $ from 'jquery'
-import './assets/css/bootstrap.min.css'
-import './assets/js/bootstrap.min'
+Vue.use(iView);
 
 Vue.config.productionTip = false
 
@@ -15,6 +14,6 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: {App},
   template: '<App/>'
 })
