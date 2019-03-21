@@ -2,7 +2,7 @@
   <div>
     <b-carousel
       id="carousel1"
-      style="text-shadow: 1px 1px 2px #333;margin: auto"
+      style="text-shadow: 1px 1px 2px #333;margin: auto;width: 98%"
       controls
       indicators
       :interval="4000"
