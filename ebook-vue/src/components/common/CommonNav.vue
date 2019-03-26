@@ -10,13 +10,15 @@
           </div>
           <Divider type="vertical" style="height: 60px" />
         </Col>
-        <Col span="3" offset="15" style="height: 100%">
+        <Col v-if="user" span="3" offset="15" style="height: 100%">
           <div class="layout-nav">
             <Submenu name="3">
               <template slot="title">
                 <img style="margin-right: 5px" src="../../assets/images/users/user.jpg" alt="user-img" width="36" class="rounded-circle">
                 <span> <b class="hidden-xs">Bert Zhang</b></span>
               </template>
+              <MenuItem  name="3-1" disabled>User/Manager</MenuItem>
+              <Divider style="margin: 0"/>
               <MenuItem  name="3-1">My Profile</MenuItem>
               <MenuItem  name="3-2">My Balance</MenuItem>
               <Divider style="margin: 0"/>
@@ -34,8 +36,18 @@
 <script>
   export default {
     name: "CommonNav",
+    props:["user"]
+
   }
 </script>
+
+<style>
+  .ivu-layout-header {
+    width: 100%;
+    background: #fff;
+    padding: 0
+  }
+</style>
 
 <style scoped>
   .layout-logo {

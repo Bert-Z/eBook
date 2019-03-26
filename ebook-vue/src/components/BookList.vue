@@ -1,15 +1,17 @@
 <template>
   <div id="index" class="layout">
     <Layout>
-      <Header :style="{width: '100%',background:'#fff',padding:'0'}">
-        <common-nav style="z-index: 100;position:relative;"></common-nav>
+      <Header>
+        <common-nav :user="user" style="z-index: 100;position:relative;"></common-nav>
       </Header>
       <Content>
         <IndexNav style="z-index:2;position: relative;margin-top: -4px;margin-bottom: 10px;"></IndexNav>
         <book-list-detail></book-list-detail>
       </Content>
 
-      <Footer style="text-align: center" class="layout-footer-center">&copy; 2019 Posted by : Bert Zhang</Footer>
+      <Footer>
+        <my-footer></my-footer>
+      </Footer>
 
     </Layout>
   </div>
@@ -19,10 +21,16 @@
   import CommonNav from "./common/CommonNav";
   import IndexNav from "./common/IndexNav";
   import BookListDetail from "./common/BookListDetail";
+  import MyFooter from "./common/MyFooter";
 
   export default {
     name: "BookList",
-    components: {BookListDetail, IndexNav, CommonNav}
+    components: {MyFooter, BookListDetail, IndexNav, CommonNav},
+    data: () => {
+      return {
+        user: true
+      }
+    }
   }
 </script>
 
