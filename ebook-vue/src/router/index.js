@@ -5,6 +5,7 @@ import BookList from '@/components/BookList'
 import BookDetails from '@/components/BookDetails'
 import SignUp from '@/components/SignUp'
 import SignIn from '@/components/SignIn'
+import Admin from '@/components/AdminIndex'
 
 Vue.use(Router)
 
@@ -16,24 +17,29 @@ export default new Router({
       component: Index
     },
     {
-      path: '/BookList',
+      path: '/booklist',
       name: 'BookList',
       component: BookList
     },
     {
-      path: '/BookDetails',
+      path: '/bookdetails',
       name: 'BookDetails',
       component: BookDetails
     },
     {
-      path: '/SignUp',
+      path: '/signup',
       name: 'SignUp',
       component: SignUp
     },
     {
-      path: '/SignIn',
+      path: '/signin',
       name: 'SignIn',
       component: SignIn
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin
     }
   ]
 })
