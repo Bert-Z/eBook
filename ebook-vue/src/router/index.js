@@ -6,6 +6,7 @@ import BookDetails from '@/components/BookDetails'
 import SignUp from '@/components/SignUp'
 import SignIn from '@/components/SignIn'
 import Admin from '@/components/AdminIndex'
+import EditBook from '@/components/EditBook'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/admin',
       name: 'Admin',
       component: Admin
+    },
+    {
+      path: '/admin/editbook',
+      name: 'editbook',
+      component: EditBook
     }
   ]
 })
