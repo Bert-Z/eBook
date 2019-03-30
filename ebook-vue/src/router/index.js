@@ -9,6 +9,7 @@ import Admin from '@/components/AdminIndex'
 import EditBook from '@/components/EditBook'
 import ShoppingCart from '@/components/ShoppingCart'
 import CheckOut from '@/components/CheckOut'
+import AllOrders from '@/components/AllOrders'
 
 Vue.use(Router)
 
@@ -43,6 +44,11 @@ export default new Router({
       path: '/checkout',
       name: 'CheckOut',
       component: CheckOut
+    },
+    {
+      path: '/allorders',
+      name: 'AllOrders',
+      component: AllOrders
     },
     {
       path: '/signin',

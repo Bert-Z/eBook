@@ -1,15 +1,15 @@
 <template>
-  <div id="shoppingcart" class="layout">
+  <div id="allorders" class="layout">
     <Layout>
       <Header>
         <common-nav :user="user" style="z-index: 100;position:relative;"></common-nav>
       </Header>
       <Content>
-        <shopping-cart-orders></shopping-cart-orders>
+        <AllOrderTable></AllOrderTable>
       </Content>
 
       <Footer>
-        <my-footer></my-footer>
+        <MyFooter></MyFooter>
       </Footer>
 
     </Layout>
@@ -20,16 +20,15 @@
   import CommonNav from "./common/CommonNav";
   import IndexNav from "./common/IndexNav";
   import MyFooter from "./common/MyFooter";
-  import ShoppingCartOrders from "./user/ShoppingCartOrders";
+  import AllOrderTable from "./user/AllOrderTable";
 
   export default {
-    name: "ShoppingCart",
-    components: {ShoppingCartOrders, MyFooter, IndexNav, CommonNav},
-    data: function () {
+    name: "AllOrders",
+    components: {AllOrderTable, MyFooter, IndexNav, CommonNav},
+    data() {
       return {
         user: true,
-
-    }
+      }
     }
   }
 </script>

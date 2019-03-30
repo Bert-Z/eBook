@@ -1,29 +1,18 @@
 <template>
-  <div>
+  <div class="allordertable">
     <Card>
-      <label>Shopping Cart</label>
-      <Table border ref="selection" :columns="columns4" :data="data"></Table>
-      <br/>
-      <div style="text-align: right">
-        <Button @click="handleSelectAll(true)">Set all selected</Button>
-        <Button @click="handleSelectAll(false)">Cancel all selected</Button>
-        <Button @click="checkout(false)">Checkout</Button>
-      </div>
+      <label>All Orders</label>
+      <Table border :columns="columns4" :data="data"></Table>
     </Card>
   </div>
 </template>
 
 <script>
   export default {
-    name: "ShoppingCartOrders",
+    name: "AllOrderTable",
     data: function () {
       return {
         columns4: [
-          {
-            type: 'selection',
-            width: 60,
-            align: 'center'
-          },
           {
             title: 'Name',
             key: 'name'
@@ -35,6 +24,10 @@
           {
             title: 'Address',
             key: 'address'
+          },
+          {
+            title: 'Date',
+            key: 'date'
           },
           {
             title: 'Action',
@@ -54,17 +47,7 @@
                       this.show(params.index)
                     }
                   }
-                }, 'Checkout'),
-                h('Button', {
-                  props: {
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index)
-                    }
-                  }
-                }, 'Delete')
+                }, 'Checkout')
               ]);
             }
           }
@@ -103,15 +86,6 @@
           title: 'User Info',
           content: `Name：${this.data[index].name}<br>Age：${this.data[index].age}<br>Address：${this.data[index].address}`
         })
-      },
-      remove(index) {
-        this.data.splice(index, 1);
-      },
-      handleSelectAll(status) {
-        this.$refs.selection.selectAll(status);
-      },
-      checkout(){
-
       }
     }
   }

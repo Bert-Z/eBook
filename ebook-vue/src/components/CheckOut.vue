@@ -5,7 +5,6 @@
         <common-nav :user="user" style="z-index: 100;position:relative;"></common-nav>
       </Header>
       <Content>
-        <IndexNav style="z-index:2;position: relative;margin-top: -4px;margin-bottom: 10px;"></IndexNav>
         <OrderDetail></OrderDetail>
       </Content>
 
