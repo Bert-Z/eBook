@@ -7,6 +7,8 @@ import SignUp from '@/components/SignUp'
 import SignIn from '@/components/SignIn'
 import Admin from '@/components/AdminIndex'
 import EditBook from '@/components/EditBook'
+import ShoppingCart from '@/components/ShoppingCart'
+import CheckOut from '@/components/CheckOut'
 
 Vue.use(Router)
 
@@ -31,6 +33,16 @@ export default new Router({
       path: '/signup',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: '/shoppingcart',
+      name: 'ShoppingCart',
+      component: ShoppingCart
+    },
+    {
+      path: '/checkout',
+      name: 'CheckOut',
+      component: CheckOut
     },
     {
       path: '/signin',
