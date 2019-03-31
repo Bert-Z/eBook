@@ -15,7 +15,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'iview/dist/styles/iview.css'  // 使用 CSS
 
-Vue.use(BootstrapVue)
+Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(iView);
 

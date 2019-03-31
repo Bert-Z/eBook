@@ -11,5 +11,9 @@ export default {
 </script>
 
 <style>
-
+  .ivu-layout-header {
+    width: 100%;
+    background: #fff;
+    padding: 0
+  }
 </style>
