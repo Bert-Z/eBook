@@ -14,6 +14,8 @@ import AllOrders from '@/components/AllOrders'
 Vue.use(Router)
 
 export default new Router({
+  mode : 'history',
+  base:'/ebook/',
   routes: [
     {
       path: '/',

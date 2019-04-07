@@ -16,14 +16,37 @@
       </Col>
     </Row>
     <Divider style="margin: 0;"></Divider>
-    <Row :gutter="16" class="books" type="flex" justify="center" align="middle" >
+    <Row :gutter="16" class="books" type="flex" justify="center" align="middle">
+      <Col span="6">
+        <div>
+          <Card>
+            <router-link :to="{name:'BookDetails'}">
+              <b-card no-body class="overflow-hidden" style="max-width: 540px;">
+                <b-row no-gutters>
+                  <b-col md="6">
+                    <b-card-img :src="backimg" class="rounded-0"/>
+                  </b-col>
+                  <b-col md="6">
+                    <b-card-body title="Horizontal Card">
+                      <b-card-text>
+                        This is a wider card with supporting text as a natural lead-in to additional content.
+                        This content is a little bit longer.
+                      </b-card-text>
+                    </b-card-body>
+                  </b-col>
+                </b-row>
+              </b-card>
+            </router-link>
+          </Card>
+        </div>
+      </Col>
       <Col span="6">
         <div>
           <Card>
             <b-card no-body class="overflow-hidden" style="max-width: 540px;">
               <b-row no-gutters>
                 <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0" />
+                  <b-card-img :src="backimg" class="rounded-0"/>
                 </b-col>
                 <b-col md="6">
                   <b-card-body title="Horizontal Card">
@@ -44,7 +67,7 @@
             <b-card no-body class="overflow-hidden" style="max-width: 540px;">
               <b-row no-gutters>
                 <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0" />
+                  <b-card-img :src="backimg" class="rounded-0"/>
                 </b-col>
                 <b-col md="6">
                   <b-card-body title="Horizontal Card">
@@ -65,28 +88,7 @@
             <b-card no-body class="overflow-hidden" style="max-width: 540px;">
               <b-row no-gutters>
                 <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0" />
-                </b-col>
-                <b-col md="6">
-                  <b-card-body title="Horizontal Card">
-                    <b-card-text>
-                      This is a wider card with supporting text as a natural lead-in to additional content.
-                      This content is a little bit longer.
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-            </b-card>
-          </Card>
-        </div>
-      </Col>
-      <Col span="6">
-        <div>
-          <Card>
-            <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-              <b-row no-gutters>
-                <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0" />
+                  <b-card-img :src="backimg" class="rounded-0"/>
                 </b-col>
                 <b-col md="6">
                   <b-card-body title="Horizontal Card">
@@ -102,14 +104,14 @@
         </div>
       </Col>
     </Row>
-    <Row :gutter="16" class="books" type="flex" justify="center" align="middle" >
+    <Row :gutter="16" class="books" type="flex" justify="center" align="middle">
       <Col span="6">
         <div>
           <Card>
             <b-card no-body class="overflow-hidden" style="max-width: 540px;">
               <b-row no-gutters>
                 <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0" />
+                  <b-card-img :src="backimg" class="rounded-0"/>
                 </b-col>
                 <b-col md="6">
                   <b-card-body title="Horizontal Card">
@@ -130,7 +132,7 @@
             <b-card no-body class="overflow-hidden" style="max-width: 540px;">
               <b-row no-gutters>
                 <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0" />
+                  <b-card-img :src="backimg" class="rounded-0"/>
                 </b-col>
                 <b-col md="6">
                   <b-card-body title="Horizontal Card">
@@ -151,7 +153,7 @@
             <b-card no-body class="overflow-hidden" style="max-width: 540px;">
               <b-row no-gutters>
                 <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0" />
+                  <b-card-img :src="backimg" class="rounded-0"/>
                 </b-col>
                 <b-col md="6">
                   <b-card-body title="Horizontal Card">
@@ -172,7 +174,7 @@
             <b-card no-body class="overflow-hidden" style="max-width: 540px;">
               <b-row no-gutters>
                 <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0" />
+                  <b-card-img :src="backimg" class="rounded-0"/>
                 </b-col>
                 <b-col md="6">
                   <b-card-body title="Horizontal Card">
@@ -198,9 +200,9 @@
   export default {
     name: "Recommendation",
     components: {BButtonGroup},
-    data(){
+    data() {
       return {
-        backimg:require('../../assets/images/books/book1.jpg')
+        backimg: require('../../assets/images/books/book1.jpg')
       }
     },
 
@@ -208,9 +210,10 @@
 </script>
 
 <style scoped>
-  .books{
+  .books {
     margin-top: 10px;
   }
+
   .bg-title h4 {
     text-transform: uppercase;
     font-size: 14px;
@@ -225,7 +228,7 @@
 
   }
 
-  .card-img{
+  .card-img {
     height: 100%;
   }
 </style>

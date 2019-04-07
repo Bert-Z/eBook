@@ -1,7 +1,7 @@
 <template>
   <div id="allorders" class="layout">
     <Layout>
-      <Header>
+      <Header style="width: 100%;background: #fff;padding: 0">
         <common-nav :user="user" style="z-index: 100;position:relative;"></common-nav>
       </Header>
       <Content>
