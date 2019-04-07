@@ -15,10 +15,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'iview/dist/styles/iview.css'  // 使用 CSS
 
 import App from './App'
+import VueResource from 'vue-resource'
 import router from './router'
 
 
-
+Vue.use(VueResource);
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(iView);
