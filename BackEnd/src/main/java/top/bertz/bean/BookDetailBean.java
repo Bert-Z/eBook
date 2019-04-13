@@ -6,10 +6,10 @@ import java.util.Map;
 public class BookDetailBean {
 
     private long id;
-    public String booktitle="asd";
-    public String bookfee="213";
-    public String image="sad";
-    public String description="qwe";
+    public String booktitle;
+    public String bookfee;
+    public String image;
+    public String description;
 //    public ArrayList<Properties> properties;
 
     public BookDetailBean(String booktitle,String bookfee,String image,String description){
