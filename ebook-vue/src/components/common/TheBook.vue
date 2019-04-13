@@ -10,14 +10,12 @@
       </Col>
       <Col span="17">
         <br/>
-        <h4 class="box-title m-t-40"><strong>Book description</strong></h4>
-        <p>Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or
-          randomised words which don't look even slightly believable. but the majority have suffered alteration in some
-          form, by injected humour</p>
+        <h4 class="box-title m-t-40"><strong>{{title}}</strong></h4>
+        <p>{{description}}</p>
         <br/>
         <h3>
-          $153
-          <small style="color: #19be6b">(36% off)</small>
+          ${{bookfee}}
+          <!--<small style="color: #19be6b">(36% off)</small>-->
         </h3>
         <br/>
         <Button shape="circle">
@@ -52,6 +50,9 @@
     name: "TheBook",
     data() {
       return {
+        title:"",
+        bookfee:"",
+        description:"",
         items: [
           {Properties: "开本", Detail: "32开"},
           {Properties: "纸张", Detail: "轻型纸"},
@@ -70,7 +71,11 @@
         emulateJSON:true
       }).then(
         function (response) {
-          console.log(response.data);
+          let info=response.data;
+          console.log(info);
+          this.title=info.booktitle;
+          this.bookfee=info.bookfee;
+          this.description=info.description;
         },function (error) {
           console.log(error);
         })
