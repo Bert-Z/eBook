@@ -66,7 +66,7 @@
     created() {
       this.$http({
         method:'GET',
-        url:'http://localhost:8080/ebook',
+        url:'http://localhost:8080/ebook/bookdetails?id=1',
         emulateJSON:true
       }).then(
         function (response) {
