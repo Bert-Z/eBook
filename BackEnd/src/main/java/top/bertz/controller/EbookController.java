@@ -2,9 +2,8 @@ package top.bertz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import top.bertz.bean.BookDetailBean;
 import top.bertz.entity.BookDetail;
-import top.bertz.repository.BookDetailReposity;
+import top.bertz.repository.BookDetailRepository;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -13,7 +12,7 @@ import java.util.HashMap;
 @RequestMapping(value = {"/ebook"})
 public class EbookController {
     @Autowired
-    private BookDetailReposity bookdetailrepo;
+    private BookDetailRepository bookdetailrepo;
 
     public HashMap<String, String> recommendation(HttpServletResponse response) {
 
@@ -22,25 +21,6 @@ public class EbookController {
         ret.put("23", "123");
         return ret;
     }
-
-//    @RequestMapping(value = {"/add"}, method = RequestMethod.GET)
-//    public String addBook(@RequestParam(value = "title", defaultValue = "hello;") String title,
-//                                  @RequestParam(value = "bookfee", defaultValue = "123") String bookfee,
-//                                  @RequestParam(value = "image", defaultValue = "hello;") String image,
-//                                  @RequestParam(value = "description", defaultValue = "hello;") String description) {
-//
-//        BookDetail b = new BookDetail(title, bookfee, image, description);
-//        bookdetailrepo.save(b);
-//
-//        return "saved";
-//    }
-
-//    @RequestMapping(value = {"/bookdetails/{id}"})
-//    public BookDetail thebook(@PathVariable Long id, HttpServletResponse response) {
-//
-//        response.addHeader("Access-Control-Allow-Origin", "*");
-//        return bookdetailrepo.findById(id).get();
-//    }
 
     @RequestMapping(value = {"/booklist"}, produces = "application/json;charset=UTF-8")
     public HashMap<String, String> bookList(HttpServletResponse response) {

@@ -14,16 +14,16 @@ public class BookDetail {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String booktitle;
-    private String bookfee;
-    private String image;
+    private double bookfee;
+    private double discount;
+    private String type;
     private String description;
 
     BookDetail(){}
 
-    public BookDetail(String booktitle, String bookfee, String image, String description) {
+    public BookDetail(String booktitle, double bookfee, String description) {
         this.booktitle = booktitle;
         this.bookfee = bookfee;
-        this.image = image;
         this.description = description;
     }
 
@@ -43,21 +43,14 @@ public class BookDetail {
         this.booktitle = booktitle;
     }
 
-    public String getBookfee() {
+    public double getBookfee() {
         return bookfee;
     }
 
-    public void setBookfee(String bookfee) {
+    public void setBookfee(double bookfee) {
         this.bookfee = bookfee;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public String getDescription() {
         return description;
@@ -65,5 +58,21 @@ public class BookDetail {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
