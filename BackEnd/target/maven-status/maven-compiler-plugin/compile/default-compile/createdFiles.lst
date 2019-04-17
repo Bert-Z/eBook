@@ -1,3 +1,5 @@
+top\bertz\entity\BookDetail.class
+top\bertz\bean\BookDetailBean.class
+top\bertz\repository\BookDetailReposity.class
 top\bertz\Application.class
 top\bertz\controller\EbookController.class
-top\bertz\bean\BookDetailBean.class
