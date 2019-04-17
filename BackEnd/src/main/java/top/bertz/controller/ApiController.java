@@ -17,6 +17,9 @@ public class ApiController {
     @Autowired
     CategoryRepository categoryRepo;
 
+    @Autowired
+    private BookDetailRepository bookdetailrepo;
+
     @RequestMapping(value = {"/getCategory2"}, produces = "application/json;charset=UTF-8")
     public List<Categorys> getCategory2(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -26,5 +29,11 @@ public class ApiController {
     public Iterable<Categorys> getAllCaregorys(HttpServletResponse response){
         response.addHeader("Access-Control-Allow-Origin", "*");
         return categoryRepo.findAll();
+    }
+
+    @RequestMapping(value = {"/getAllBooks"}, produces = "application/json;charset=UTF-8")
+    public Iterable<BookDetail> getAllBooks(HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        return bookdetailrepo.findAll();
     }
 }

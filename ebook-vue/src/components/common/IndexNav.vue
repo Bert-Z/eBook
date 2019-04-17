@@ -29,7 +29,7 @@
         }).then(
           function (response) {
             this.allCategories = response.data;
-            console.log(this.allCategories);
+            // console.log(this.allCategories);
           }, function (error) {
             console.log(error);
           }
@@ -43,7 +43,7 @@
         }).then(
           function (response) {
             this.category2 = response.data;
-            console.log(this.category2);
+            // console.log(this.category2);
           }, function (error) {
             console.log(error);
           }

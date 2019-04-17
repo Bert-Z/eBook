@@ -202,9 +202,29 @@
     components: {BButtonGroup},
     data() {
       return {
-        backimg: require('../../assets/images/books/book1.jpg')
+        backimg: require('../../assets/images/books/book1.jpg'),
+        books:[]
       }
     },
+    methods:{
+      getRecom:function(){
+        this.$http({
+          method: "GET",
+          url: "http://localhost:8080/api/getAllBooks",
+          emulateJSON: true
+        }).then(
+          function (response) {
+            this.books = response.data;
+            console.log(this.books);
+          }, function (error) {
+            console.log(error);
+          }
+        )
+      },
+    },
+    created(){
+      this.getRecom();
+    }
 
   }
 </script>
