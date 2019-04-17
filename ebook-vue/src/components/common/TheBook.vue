@@ -50,9 +50,9 @@
     name: "TheBook",
     data() {
       return {
-        title:"",
-        bookfee:"",
-        description:"",
+        title: "",
+        bookfee: "",
+        description: "",
         items: [
           {Properties: "开本", Detail: "32开"},
           {Properties: "纸张", Detail: "轻型纸"},
@@ -63,22 +63,26 @@
         ]
       }
     },
-    methods: {},
+    methods: {
+      getInfos: function () {
+        this.$http({
+          method: 'GET',
+          url: 'http://localhost:8080/ebook/bookdetails?id=1',
+          emulateJSON: true
+        }).then(
+          function (response) {
+            let info = response.data;
+            console.log(info);
+            this.title = info.booktitle;
+            this.bookfee = info.bookfee;
+            this.description = info.description;
+          }, function (error) {
+            console.log(error);
+          })
+      }
+    },
     created() {
-      this.$http({
-        method:'GET',
-        url:'http://localhost:8080/ebook/bookdetails?id=1',
-        emulateJSON:true
-      }).then(
-        function (response) {
-          let info=response.data;
-          console.log(info);
-          this.title=info.booktitle;
-          this.bookfee=info.bookfee;
-          this.description=info.description;
-        },function (error) {
-          console.log(error);
-        })
+      this.getInfos();
     }
   }
 </script>
