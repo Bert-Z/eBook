@@ -16,7 +16,7 @@ public class BookDetail {
     private String booktitle;
     private double bookfee;
     private double discount;
-    private String type;
+    private int type;
     private String description;
 
     BookDetail(){}
@@ -68,11 +68,11 @@ public class BookDetail {
         this.discount = discount;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 }
