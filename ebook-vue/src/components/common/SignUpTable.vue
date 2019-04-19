@@ -84,10 +84,19 @@
       }
     },
     methods: {
+      createUser:function(){
+        this.$http.post("http://localhost:8080/user/signup",{name:this.formCustom.name,password:this.formCustom.passwd,email:this.formCustom.mail},{emulateJSON: true}
+).then(function(res){
+          this.$Message.success('Success!');
+        },function(error){
+          this.$Message.error('Fail!');
+          console.log(error);
+        })
+      },
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('Success!');
+            this.createUser();
           } else {
             this.$Message.error('Fail!');
           }
