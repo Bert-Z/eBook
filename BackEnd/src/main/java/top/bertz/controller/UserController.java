@@ -18,17 +18,25 @@ public class UserController {
     private UserRepository userRepository;
 
     @RequestMapping(value = {"signup"}, method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    public String signup(HttpServletRequest request, HttpServletResponse response) {
-
+    public void signup(HttpServletRequest request, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
-
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-
         userRepository.save(new Users(name, password, email));
 
-        return request.getParameter("name");
+    }
 
+    @RequestMapping(value = {"signin"}, method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public int signin(HttpServletRequest request, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
+
+        if (userRepository.existsByNameAndAndPassword(name, password)) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

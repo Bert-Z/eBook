@@ -87,7 +87,10 @@
       createUser:function(){
         this.$http.post("http://localhost:8080/user/signup",{name:this.formCustom.name,password:this.formCustom.passwd,email:this.formCustom.mail},{emulateJSON: true}
 ).then(function(res){
+
           this.$Message.success('Success!');
+          this.$router.push({name:"Index"});
+
         },function(error){
           this.$Message.error('Fail!');
           console.log(error);

@@ -55,10 +55,25 @@
       }
     },
     methods: {
+      findUser:function(){
+        this.$http.post("http://localhost:8080/user/signin",{name:this.formCustom.name,password:this.formCustom.passwd},{emulateJSON: true}
+).then(function(res){
+          // console.log(res.data);
+          if(res.data==1){
+            this.$Message.success('Success!');
+            this.$router.push({name:"Index"});
+          }
+
+        },function(error){
+          this.$Message.error('Fail!');
+          console.log(error);
+        })
+      },
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('Success!');
+            // this.$Message.success('Success!');
+            this.findUser();
           } else {
             this.$Message.error('Fail!');
           }
