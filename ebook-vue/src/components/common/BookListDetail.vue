@@ -38,7 +38,7 @@
         data: {
           columns: [
             {
-              label: 'Name',
+              label: 'Title',
               field: 'name',
               sort: 'asc'
             },

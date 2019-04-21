@@ -223,7 +223,7 @@
       },
     },
     created(){
-      this.getRecom();
+      // this.getRecom();
     }
 
   }
