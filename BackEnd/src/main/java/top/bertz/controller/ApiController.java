@@ -36,4 +36,5 @@ public class ApiController {
         response.addHeader("Access-Control-Allow-Origin", "*");
         return bookdetailrepo.findAll();
     }
+
 }

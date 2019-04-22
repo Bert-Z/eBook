@@ -23,7 +23,7 @@ export default new Router({
       component: Index
     },
     {
-      path: '/booklist',
+      path: '/booklist/:category',
       name: 'BookList',
       component: BookList
     },

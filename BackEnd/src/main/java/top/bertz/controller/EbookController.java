@@ -3,10 +3,13 @@ package top.bertz.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.bertz.entity.BookDetail;
+import top.bertz.entity.BookInList;
 import top.bertz.repository.BookDetailRepository;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = {"/ebook"})
@@ -22,13 +25,26 @@ public class EbookController {
         return ret;
     }
 
-    @RequestMapping(value = {"/booklist"}, produces = "application/json;charset=UTF-8")
-    public HashMap<String, String> bookList(HttpServletResponse response) {
+    @RequestMapping(value = {"/{type}"}, produces = "application/json;charset=UTF-8")
+    public List<BookDetail> bookList(@PathVariable(name = "type") int type, HttpServletResponse response) {
 
         response.addHeader("Access-Control-Allow-Origin", "*");
-        HashMap<String, String> ret = new HashMap<String, String>();
-        ret.put("23", "123");
-        return ret;
+
+        List<BookDetail> books=bookdetailrepo.findBookDetailsByType(type);
+//        ArrayList<BookInList> bl=new ArrayList<BookInList>();
+//        for(BookDetail item : books){
+//            BookInList bitem=new BookInList();
+//            bitem.setBooktitle(item.getBooktitle());
+//            bitem.setType(item.getType());
+//            bitem.setBookfee(item.getBookfee());
+//            bitem.setDiscount(item.getDiscount());
+//            bitem.setNumber(item.getNumber());
+//            bitem.setCreatetime(item.getCreatetime());
+//            bitem.setUpdatetime(item.getUpdatetime());
+//
+//            bl.add(bitem);
+//        }
+        return books;
     }
 
 
@@ -54,6 +70,7 @@ public class EbookController {
         response.addHeader("Access-Control-Allow-Origin", "*");
         HashMap<String, String> ret = new HashMap<String, String>();
         ret.put("23", "123");
+        ret.put("24", "123");
         return ret;
     }
 
