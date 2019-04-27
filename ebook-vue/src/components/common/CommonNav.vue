@@ -15,7 +15,7 @@
             <Submenu name="3">
               <template slot="title">
                 <img style="margin-right: 5px" src="../../assets/images/users/user.jpg" alt="user-img" width="36" class="rounded-circle">
-                <span> <b class="hidden-xs">Bert Zhang</b></span>
+                <span> <b class="hidden-xs">{{name}}</b></span>
               </template>
               <MenuItem  name="3-1" disabled>User/Manager</MenuItem>
               <Divider style="margin: 0"/>
@@ -24,7 +24,7 @@
               <Divider style="margin: 0"/>
               <MenuItem  name="3-3">Account Setting</MenuItem>
               <Divider style="margin: 0"/>
-              <MenuItem  name="3-4">Logout</MenuItem>
+              <MenuItem  name="3-4"><a @click="quit">Logout</a></MenuItem>
             </Submenu>
           </div>
         </Col>
@@ -34,10 +34,32 @@
 </template>
 
 <script>
+  import {setCookie,getCookie,delCookie} from "../../util/util";
+
   export default {
     name: "CommonNav",
-    props:["user"]
-
+    props:["user"],
+    data(){
+      return {
+        name:""
+      }
+    },
+    mounted(){
+      if(this.user){
+        let username=getCookie('name');
+        this.name=username;
+        console.log(username);
+        if(username === ""){
+          this.$router.push({name:"SignIn"});
+        }
+      }
+    },
+    methods:{
+      quit:function () {
+        delCookie('name');
+        this.$router.go(0);
+      }
+    }
   }
 </script>
 

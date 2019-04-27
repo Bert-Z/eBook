@@ -29,6 +29,8 @@
 </template>
 
 <script>
+  import {getCookie,setCookie} from '../../util/util'
+
   export default {
     name: "SignInTable",
     data() {
@@ -54,14 +56,27 @@
         }
       }
     },
+    mounted(){
+      if(getCookie("name")){
+        this.$router.push({name:"Index"});
+      }
+    },
     methods: {
       findUser:function(){
-        this.$http.post("http://localhost:8080/user/signin",{name:this.formCustom.name,password:this.formCustom.passwd},{emulateJSON: true}
+        let data={"name":this.formCustom.name,"password":this.formCustom.passwd};
+        this.$http.post("http://localhost:8080/user/signin",data,{emulateJSON: true}
 ).then(function(res){
           // console.log(res.data);
-          if(res.data==1){
+          // console.log(this.formCustom.name);
+          if(res.data===1){
             this.$Message.success('Success!');
-            this.$router.push({name:"Index"});
+            setCookie('name', this.formCustom.name,1000*60);
+            setTimeout(function(){
+              this.$router.push({name:"Index"});
+            }.bind(this),1000)
+
+          }else{
+            this.$Message.error('Find user failed!');
           }
 
         },function(error){

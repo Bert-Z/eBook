@@ -35,6 +35,7 @@
 </template>
 
 <script>
+  import {getCookie,setCookie} from '../../util/util'
   export default {
     name: "SignUpTable",
     data() {
@@ -85,11 +86,16 @@
     },
     methods: {
       createUser:function(){
-        this.$http.post("http://localhost:8080/user/signup",{name:this.formCustom.name,password:this.formCustom.passwd,email:this.formCustom.mail},{emulateJSON: true}
+        let data={name:this.formCustom.name,password:this.formCustom.passwd,email:this.formCustom.mail};
+        this.$http.post("http://localhost:8080/user/signup",data,{emulateJSON: true}
 ).then(function(res){
 
           this.$Message.success('Success!');
-          this.$router.push({name:"Index"});
+          setCookie('name', this.formCustom.name,1000*60);
+          setTimeout(function(){
+            this.$router.push({name:"Index"});
+          }.bind(this),1000)
+
 
         },function(error){
           this.$Message.error('Fail!');
