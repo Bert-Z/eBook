@@ -16,13 +16,15 @@
       <!--</Col>-->
     </Row>
     <Divider style="margin: 0;"></Divider>
-    <br></br>
+    <br/>
     <mdb-datatable
       :data="data"
       striped
       bordered
       arrows
-    />
+    >
+
+    </mdb-datatable>
   </div>
 </template>
 

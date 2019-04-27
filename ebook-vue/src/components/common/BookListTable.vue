@@ -28,7 +28,7 @@
   };
 
   export default {
-    name: "BookManagement",
+    name: "Book",
     data() {
       return {
         searchInput: "",
@@ -122,7 +122,7 @@
       getBookListByCategory: function () {
         this.$http({
           method: "GET",
-          url: "http://localhost:8080/api/getAllBooks",
+          url: "http://localhost:8080/ebook/" + this.$route.params.category,
           emulateJSON: true
         }).then(
           function (response) {

@@ -20,7 +20,7 @@
 <script>
   import CommonNav from "./common/CommonNav";
   import IndexNav from "./common/IndexNav";
-  import BookListDetail from "./common/BookListDetail";
+  import BookListDetail from "./common/BookListTable";
   import MyFooter from "./common/MyFooter";
 
   export default {
