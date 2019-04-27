@@ -1,11 +1,15 @@
 <template>
   <div class="common_nav">
-    <Menu  mode="horizontal" theme="dark" style="width: 100%">
-      <Submenu v-for="ca in category2"  v-bind:name="ca">
+    <Menu mode="horizontal" theme="dark" style="width: 100%">
+      <Submenu v-for="ca in category2" v-bind:name="ca">
         <template slot="title">
           <span> <b class="hidden-xs">{{ca}}</b></span>
         </template>
-        <MenuItem v-for="(item,index) in allCategories" v-if="item.category2 === ca" v-bind:name="item.category1">{{item.category1}}</MenuItem>
+        <div v-for="item in allCategories">
+          <MenuItem v-if="item.category2 === ca" :name="item.category1"
+                    @click.native="goto(item.id)">{{item.category1}}
+          </MenuItem>
+        </div>
       </Submenu>
     </Menu>
   </div>
@@ -21,6 +25,11 @@
       }
     },
     methods: {
+      goto(id) {
+        // console.log(id);
+        this.$router.push({name: "BookList", params: {category: id}});
+        this.$router.go(0);
+      },
       getAllCategorys: function () {
         this.$http({
           method: "GET",

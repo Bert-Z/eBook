@@ -4,9 +4,9 @@
       <Row style="height: 100%">
         <Col span="6" style="height: 100%">
           <div class="layout-logo">
-            <a class="logo" href="#">
+            <router-link class="logo" :to="{name:'Index'}">
               <img src="../../assets/images/logo.jpg" width="50%" height="100%">
-            </a>
+            </router-link>
           </div>
           <Divider type="vertical" style="height: 60px" />
         </Col>
