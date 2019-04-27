@@ -1,6 +1,7 @@
 package top.bertz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.*;
 import top.bertz.entity.BookDetail;
 import top.bertz.entity.Categorys;
@@ -35,6 +36,13 @@ public class ApiController {
     public Iterable<BookDetail> getAllBooks(HttpServletResponse response){
         response.addHeader("Access-Control-Allow-Origin", "*");
         return bookdetailrepo.findAll();
+    }
+
+    @RequestMapping(value = {"/getRecommend"}, produces = "application/json;charset=UTF-8")
+    public List<BookDetail> getRecommend(HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
+        return bookdetailrepo.findFirst8ByType(2);
     }
 
 }

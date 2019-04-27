@@ -16,181 +16,56 @@
       </Col>
     </Row>
     <Divider style="margin: 0;"></Divider>
-    <Row :gutter="16" class="books" type="flex" justify="center" align="middle">
-      <Col span="6">
-        <div>
-          <Card>
-            <router-link :to="{name:'BookDetails'}">
-              <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-                <b-row no-gutters>
-                  <b-col md="6">
-                    <b-card-img :src="backimg" class="rounded-0"/>
-                  </b-col>
-                  <b-col md="6">
-                    <b-card-body title="Horizontal Card">
-                      <b-card-text>
-                        This is a wider card with supporting text as a natural lead-in to additional content.
-                        This content is a little bit longer.
-                      </b-card-text>
-                    </b-card-body>
-                  </b-col>
-                </b-row>
-              </b-card>
-            </router-link>
-          </Card>
-        </div>
-      </Col>
-      <Col span="6">
-        <div>
-          <Card>
-            <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-              <b-row no-gutters>
-                <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0"/>
-                </b-col>
-                <b-col md="6">
-                  <b-card-body title="Horizontal Card">
-                    <b-card-text>
-                      This is a wider card with supporting text as a natural lead-in to additional content.
-                      This content is a little bit longer.
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-            </b-card>
-          </Card>
-        </div>
-      </Col>
-      <Col span="6">
-        <div>
-          <Card>
-            <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-              <b-row no-gutters>
-                <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0"/>
-                </b-col>
-                <b-col md="6">
-                  <b-card-body title="Horizontal Card">
-                    <b-card-text>
-                      This is a wider card with supporting text as a natural lead-in to additional content.
-                      This content is a little bit longer.
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-            </b-card>
-          </Card>
-        </div>
-      </Col>
-      <Col span="6">
-        <div>
-          <Card>
-            <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-              <b-row no-gutters>
-                <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0"/>
-                </b-col>
-                <b-col md="6">
-                  <b-card-body title="Horizontal Card">
-                    <b-card-text>
-                      This is a wider card with supporting text as a natural lead-in to additional content.
-                      This content is a little bit longer.
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-            </b-card>
-          </Card>
-        </div>
-      </Col>
-    </Row>
-    <Row :gutter="16" class="books" type="flex" justify="center" align="middle">
-      <Col span="6">
-        <div>
-          <Card>
-            <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-              <b-row no-gutters>
-                <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0"/>
-                </b-col>
-                <b-col md="6">
-                  <b-card-body title="Horizontal Card">
-                    <b-card-text>
-                      This is a wider card with supporting text as a natural lead-in to additional content.
-                      This content is a little bit longer.
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-            </b-card>
-          </Card>
-        </div>
-      </Col>
-      <Col span="6">
-        <div>
-          <Card>
-            <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-              <b-row no-gutters>
-                <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0"/>
-                </b-col>
-                <b-col md="6">
-                  <b-card-body title="Horizontal Card">
-                    <b-card-text>
-                      This is a wider card with supporting text as a natural lead-in to additional content.
-                      This content is a little bit longer.
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-            </b-card>
-          </Card>
-        </div>
-      </Col>
-      <Col span="6">
-        <div>
-          <Card>
-            <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-              <b-row no-gutters>
-                <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0"/>
-                </b-col>
-                <b-col md="6">
-                  <b-card-body title="Horizontal Card">
-                    <b-card-text>
-                      This is a wider card with supporting text as a natural lead-in to additional content.
-                      This content is a little bit longer.
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-            </b-card>
-          </Card>
-        </div>
-      </Col>
-      <Col span="6">
-        <div>
-          <Card>
-            <b-card no-body class="overflow-hidden" style="max-width: 540px;">
-              <b-row no-gutters>
-                <b-col md="6">
-                  <b-card-img :src="backimg" class="rounded-0"/>
-                </b-col>
-                <b-col md="6">
-                  <b-card-body title="Horizontal Card">
-                    <b-card-text>
-                      This is a wider card with supporting text as a natural lead-in to additional content.
-                      This content is a little bit longer.
-                    </b-card-text>
-                  </b-card-body>
-                </b-col>
-              </b-row>
-            </b-card>
-          </Card>
-
-        </div>
-      </Col>
-    </Row>
+    <div>
+      <Row :gutter="16" class="books" type="flex" justify="center" align="middle">
+        <Col v-for="(book,index) in books" v-if="index < 4" span="6">
+          <div>
+            <Card :data-hide="book.id">
+              <router-link :to="{name:'BookDetails',query:{id:book.id}}">
+                <b-card no-body class="overflow-hidden" style="max-width: 540px;">
+                  <b-row no-gutters>
+                    <b-col md="6">
+                      <b-card-img :src="backimg" class="rounded-0"/>
+                    </b-col>
+                    <b-col md="6">
+                      <b-card-body :title="book.booktitle">
+                        <b-card-text>
+                          {{book.description}}
+                        </b-card-text>
+                      </b-card-body>
+                    </b-col>
+                  </b-row>
+                </b-card>
+              </router-link>
+            </Card>
+          </div>
+        </Col>
+      </Row>
+      <Row :gutter="16" class="books" type="flex" justify="center" align="middle">
+        <Col v-for="(book,index) in books" v-if="index >= 4" span="6">
+          <div>
+            <Card :data-hide="book.id">
+              <router-link :to="{name:'BookDetails',query:{id:book.id}}">
+                <b-card no-body class="overflow-hidden" style="max-width: 540px;">
+                  <b-row no-gutters>
+                    <b-col md="6">
+                      <b-card-img :src="backimg" class="rounded-0"/>
+                    </b-col>
+                    <b-col md="6">
+                      <b-card-body :title="book.booktitle">
+                        <b-card-text>
+                          {{book.description}}
+                        </b-card-text>
+                      </b-card-body>
+                    </b-col>
+                  </b-row>
+                </b-card>
+              </router-link>
+            </Card>
+          </div>
+        </Col>
+      </Row>
+    </div>
   </div>
 </template>
 
@@ -203,14 +78,14 @@
     data() {
       return {
         backimg: require('../../assets/images/books/book1.jpg'),
-        books:[]
+        books: []
       }
     },
-    methods:{
-      getRecom:function(){
+    methods: {
+      getRecom: function () {
         this.$http({
           method: "GET",
-          url: "http://localhost:8080/api/getAllBooks",
+          url: "http://localhost:8080/api/getRecommend",
           emulateJSON: true
         }).then(
           function (response) {
@@ -222,8 +97,8 @@
         )
       },
     },
-    created(){
-      // this.getRecom();
+    created() {
+      this.getRecom();
     }
 
   }
