@@ -32,7 +32,7 @@ public class Book {
     private Set<Carts> carts = new HashSet<Carts>();
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
-    @JoinColumn(name = "type")
+    @JoinColumn(name = "category_id")
     private Category category;
 
 

@@ -44,12 +44,10 @@ public class ApiController {
     @RequestMapping(value = {"/getRecommend"}, produces = "application/json;charset=UTF-8")
     public List<Book> getRecommend(HttpServletResponse response){
         response.addHeader("Access-Control-Allow-Origin", "*");
-        EntityManager em=emf.createEntityManager();
 
-        Category ca=em.find(Category.class,2);
+        List<Book> books=categoryRepo.findById(15).get().getBooks();
 
-
-        return bookdetailrepo.findFirst8ByCategory(ca);
+        return books;
     }
 
 }
