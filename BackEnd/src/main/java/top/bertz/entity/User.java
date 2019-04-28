@@ -113,4 +113,12 @@ public class User {
     public void setUsercarts(List<Carts> usercarts) {
         this.usercarts = usercarts;
     }
+
+    public List<Orders> getUserorders() {
+        return userorders;
+    }
+
+    public void setUserorders(List<Orders> userorders) {
+        this.userorders = userorders;
+    }
 }

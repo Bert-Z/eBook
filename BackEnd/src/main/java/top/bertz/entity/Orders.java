@@ -12,6 +12,7 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderid;
     private Long bookid;
     private int booknum;
@@ -27,7 +28,7 @@ public class Orders {
     @JsonIgnoreProperties("orders")
     private User user;
 
-    Orders() {
+    public Orders() {
     }
 
     public Long getId() {
@@ -68,5 +69,21 @@ public class Orders {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Timestamp getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Timestamp createtime) {
+        this.createtime = createtime;
+    }
+
+    public Timestamp getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(Timestamp updatetime) {
+        this.updatetime = updatetime;
     }
 }
