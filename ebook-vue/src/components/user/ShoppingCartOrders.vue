@@ -14,6 +14,8 @@
 </template>
 
 <script>
+  import {getCookie} from '../../util/util'
+
   export default {
     name: "ShoppingCartOrders",
     data: function () {
@@ -25,16 +27,12 @@
             align: 'center'
           },
           {
-            title: 'Name',
-            key: 'name'
+            title: 'Title',
+            key: 'booktitle'
           },
           {
-            title: 'Age',
-            key: 'age'
-          },
-          {
-            title: 'Address',
-            key: 'address'
+            title: 'Numbers',
+            key: 'booknum'
           },
           {
             title: 'Action',
@@ -54,7 +52,7 @@
                       this.show(params.index)
                     }
                   }
-                }, 'Checkout'),
+                }, 'View'),
                 h('Button', {
                   props: {
                     size: 'small'
@@ -69,40 +67,36 @@
             }
           }
         ],
-        data: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park',
-            date: '2016-10-03'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park',
-            date: '2016-10-01'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park',
-            date: '2016-10-02'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park',
-            date: '2016-10-04'
-          }
-        ]
+        data: []
       }
     },
     methods: {
+      getcarts:function(){
+        this.$http({
+          method: 'GET',
+          url: 'http://localhost:8080/api/getcarts?username=' + getCookie('name'),
+          emulateJSON: true
+        }).then(
+          function (response) {
+            let info = response.data;
+            for(let i in info){
+              let item={
+                id:info[i].books[0].id,
+                booktitle: info[i].books[0].booktitle,
+                booknum:info[i].booknum
+              };
+              this.data.push(item);
+            }
+          }, function (error) {
+            console.log(error);
+          })
+      },
       show(index) {
-        this.$Modal.info({
-          title: 'User Info',
-          content: `Name：${this.data[index].name}<br>Age：${this.data[index].age}<br>Address：${this.data[index].address}`
-        })
+        // this.$Modal.info({
+        //   title: 'User Info',
+        //   content: `Name：${this.data[index].name}<br>Age：${this.data[index].age}<br>Address：${this.data[index].address}`
+        // })
+        this.$router.push({name:"BookDetails",query:{id:this.data[index].id}});
       },
       remove(index) {
         this.data.splice(index, 1);
@@ -113,6 +107,9 @@
       checkout(){
 
       }
+    },
+    created(){
+      this.getcarts();
     }
   }
 </script>

@@ -117,10 +117,18 @@ public class ApiController {
             cart.setBooks(books);
         }
 
-
         cartRepository.save(cart);
 
         return 1;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = {"/getcarts"}, produces = "application/json;charset=UTF-8")
+    public List<Carts> getCarts(@RequestParam(value = "username") String username,HttpServletResponse response){
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
+        User user=userRepository.findByName(username);
+        List<Carts> carts=user.getUsercarts();
+
+        return carts;
+    }
 }
