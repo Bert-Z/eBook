@@ -44,7 +44,7 @@
           },
           {
             title: '类型',
-            key: 'type'
+            key: 'category'
           },
           {
             title: '现价',
@@ -85,17 +85,7 @@
                       this.viewdetail(params.index)
                     }
                   }
-                }, 'View'),
-                h('Button', {
-                  props: {
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index)
-                    }
-                  }
-                }, 'Delete')
+                }, 'View')
               ]);
             }
           }
@@ -127,7 +117,11 @@
         }).then(
           function (response) {
             // console.log(response.data[1].booktitle);
-            Data.histories=response.data;
+            var ret=response.data;
+            for(var dataitem in ret){
+              ret[dataitem].category=ret[dataitem].category.category1+" > "+ret[dataitem].category.category2;
+            }
+            Data.histories=ret;
             // console.log(c);
             this.handleListApproveHistory(Data.histories);
           }, function (error) {

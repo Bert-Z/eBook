@@ -45,7 +45,7 @@ public class ApiController {
     public List<Book> getRecommend(HttpServletResponse response){
         response.addHeader("Access-Control-Allow-Origin", "*");
 
-        List<Book> books=categoryRepo.findById(15).get().getBooks();
+        List<Book> books=categoryRepo.findById(15).get().getBooks().subList(0,8);
 
         return books;
     }

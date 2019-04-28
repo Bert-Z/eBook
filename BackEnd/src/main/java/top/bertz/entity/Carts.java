@@ -1,5 +1,6 @@
 package top.bertz.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -32,6 +33,7 @@ public class Carts {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("carts")
     private User user;
 
     public Carts() {

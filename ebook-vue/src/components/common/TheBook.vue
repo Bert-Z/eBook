@@ -53,13 +53,13 @@
         title: "",
         bookfee: "",
         description: "",
+        ctype:"",
         items: [
           {Properties: "开本", Detail: "32开"},
           {Properties: "纸张", Detail: "轻型纸"},
           {Properties: "包装", Detail: "平装-胶订"},
           {Properties: "是否套装", Detail: "是"},
-          {Properties: "国际标准书号ISBN", Detail: "9787559420602"},
-          {Properties: "所属分类", Detail: "图书>小说>历史"}
+          {Properties: "国际标准书号ISBN", Detail: "9787559420602"}
         ]
       }
     },
@@ -72,10 +72,12 @@
         }).then(
           function (response) {
             let info = response.data;
-            console.log(info);
+            // console.log(info);
             this.title = info.booktitle;
             this.bookfee = info.bookfee;
             this.description = info.description;
+            this.ctype = info.category.category1+" > "+info.category.category2;
+            this.items.push({Properties: "所属分类", Detail: this.ctype});
           }, function (error) {
             console.log(error);
           })
