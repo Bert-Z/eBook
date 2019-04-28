@@ -6,7 +6,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -14,21 +16,17 @@ import java.util.Set;
 public class Carts {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private Long cartid;
     private int booknum;
-
-    @CreatedDate
-    private Timestamp createtime;
-
-    @LastModifiedDate
-    private Timestamp updatetime;
 
 
     @ManyToMany
     @JoinTable(name = "carts_books",
             joinColumns = @JoinColumn(name = "cartid"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Set<Book> books = new HashSet<Book>();
+    @JsonIgnoreProperties("carts")
+    private List<Book> books = new ArrayList<Book>();
 
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
@@ -56,27 +54,11 @@ public class Carts {
         this.cartid = cartid;
     }
 
-    public Timestamp getCreatetime() {
-        return createtime;
-    }
-
-    public void setCreatetime(Timestamp createtime) {
-        this.createtime = createtime;
-    }
-
-    public Timestamp getUpdatetime() {
-        return updatetime;
-    }
-
-    public void setUpdatetime(Timestamp updatetime) {
-        this.updatetime = updatetime;
-    }
-
-    public Set<Book> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(Set<Book> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 
@@ -86,5 +68,13 @@ public class Carts {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

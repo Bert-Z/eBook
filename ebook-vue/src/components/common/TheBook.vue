@@ -93,6 +93,21 @@
             console.log(error);
           })
       },
+      addcart:function(){
+        let data = {"id": this.id, "addnum": this.addnum,"username":getCookie('name')};
+        this.$http.post('http://localhost:8080/api/addcart', data, {emulateJSON: true}
+        ).then(function (res) {
+          if (res.data === 1) {
+            this.$Message.info('加购成功');
+            this.$router.go(0);
+          } else {
+            this.$Message.error('失败');
+          }
+        }, function (error) {
+          this.$Message.error('失败!');
+          console.log(error);
+        })
+      },
       buynow: function () {
         let data = {"id": this.id, "buynum": this.buynum,"username":getCookie('name')};
         this.$http.post('http://localhost:8080/api/buynow', data, {emulateJSON: true}
@@ -129,7 +144,7 @@
           if (this.remain < this.addnum) {
             this.$Message.error("库存不够");
           } else {
-            this.$Message.info('加购成功');
+            this.addcart();
           }
         }
       },

@@ -30,6 +30,7 @@ public class Book {
     private Timestamp updatetime;
 
     @ManyToMany(mappedBy = "books")
+    @JsonIgnoreProperties("books")
     private Set<Carts> carts = new HashSet<Carts>();
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
