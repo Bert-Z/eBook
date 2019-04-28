@@ -1,15 +1,20 @@
 package top.bertz.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Categorys {
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id",nullable = false)
     private Integer id;
     private String category1;
     private String category2;
+
+    @OneToMany(mappedBy = "category",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Book> books=new ArrayList<Book>();
 
     public Integer getId() {
         return id;
@@ -33,5 +38,13 @@ public class Categorys {
 
     public void setCategory2(String category2) {
         this.category2 = category2;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

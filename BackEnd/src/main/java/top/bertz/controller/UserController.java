@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import top.bertz.entity.Users;
+import top.bertz.entity.User;
 import top.bertz.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class UserController {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        userRepository.save(new Users(name, password, email));
+        userRepository.save(new User(name, password, email));
 
     }
 

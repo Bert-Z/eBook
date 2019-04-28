@@ -2,12 +2,12 @@ package top.bertz.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import top.bertz.entity.Categorys;
+import top.bertz.entity.Category;
 
 import java.util.List;
 
-public interface CategoryRepository extends CrudRepository<Categorys, Integer> {
-    @Query("select distinct category2 from Categorys")
-    public List<Categorys> findCategory2();
+public interface CategoryRepository extends CrudRepository<Category, Integer> {
+    @Query("select distinct category2 from Category")
+    public List<Category> findCategory2();
 
 }

@@ -3,10 +3,7 @@ package top.bertz.entity;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -17,13 +14,16 @@ public class Orders {
     private Long orderid;
     private Long bookid;
     private int booknum;
-    private Long userid;
 
     @CreatedDate
     private Timestamp createtime;
 
     @LastModifiedDate
     private Timestamp updatetime;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     Orders() {
     }
@@ -52,19 +52,19 @@ public class Orders {
         this.booknum = booknum;
     }
 
-    public Long getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Long userid) {
-        this.userid = userid;
-    }
-
     public Long getOrderid() {
         return orderid;
     }
 
     public void setOrderid(Long orderid) {
         this.orderid = orderid;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -1,10 +1,8 @@
 package top.bertz.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import top.bertz.entity.Users;
+import top.bertz.entity.User;
 
-import java.util.List;
-
-public interface UserRepository extends CrudRepository<Users,Long> {
+public interface UserRepository extends CrudRepository<User,Long> {
     boolean existsByNameAndAndPassword(String Name,String Password);
 }

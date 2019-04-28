@@ -1,18 +1,20 @@
 package top.bertz.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Users {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id",nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name="name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column(name="password",nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name="email",nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
     private String nickname;
     private int genxder;
@@ -20,12 +22,20 @@ public class Users {
     private String receiptplace;
 
 
-    Users(){}
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Carts> usercarts = new ArrayList<Carts>();
 
-    public Users(String name,String password,String email){
-        this.name=name;
-        this.password=password;
-        this.email=email;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Orders> userorders = new ArrayList<Orders>();
+
+
+    User() {
+    }
+
+    public User(String name, String password, String email) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
     }
 
     public Long getId() {
@@ -90,5 +100,13 @@ public class Users {
 
     public void setReceiptplace(String receiptplace) {
         this.receiptplace = receiptplace;
+    }
+
+    public List<Carts> getUsercarts() {
+        return usercarts;
+    }
+
+    public void setUsercarts(List<Carts> usercarts) {
+        this.usercarts = usercarts;
     }
 }

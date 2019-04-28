@@ -2,12 +2,13 @@ package top.bertz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import top.bertz.entity.BookDetail;
-import top.bertz.entity.BookInList;
-import top.bertz.repository.BookDetailRepository;
+import top.bertz.entity.Book;
+import top.bertz.entity.Category;
+import top.bertz.repository.BookRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import java.util.List;
 @RequestMapping(value = {"/ebook"})
 public class EbookController {
     @Autowired
-    private BookDetailRepository bookdetailrepo;
+    private BookRepository bookdetailrepo;
+
+    EntityManagerFactory emf = null;
 
     public HashMap<String, String> recommendation(HttpServletResponse response) {
 
@@ -26,30 +29,20 @@ public class EbookController {
     }
 
     @RequestMapping(value = {"/{type}"}, produces = "application/json;charset=UTF-8")
-    public List<BookDetail> bookList(@PathVariable(name = "type") int type, HttpServletResponse response) {
+    public List<Book> bookList(@PathVariable(name = "type") int type, HttpServletResponse response) {
 
         response.addHeader("Access-Control-Allow-Origin", "*");
 
-        List<BookDetail> books=bookdetailrepo.findBookDetailsByType(type);
-//        ArrayList<BookInList> bl=new ArrayList<BookInList>();
-//        for(BookDetail item : books){
-//            BookInList bitem=new BookInList();
-//            bitem.setBooktitle(item.getBooktitle());
-//            bitem.setType(item.getType());
-//            bitem.setBookfee(item.getBookfee());
-//            bitem.setDiscount(item.getDiscount());
-//            bitem.setNumber(item.getNumber());
-//            bitem.setCreatetime(item.getCreatetime());
-//            bitem.setUpdatetime(item.getUpdatetime());
-//
-//            bl.add(bitem);
-//        }
+        EntityManager em=emf.createEntityManager();
+        Category ca=em.find(Category.class,2);
+
+        List<Book> books=bookdetailrepo.findBooksByCategory(ca);
         return books;
     }
 
 
     @RequestMapping(value = {"/bookdetails"}, produces = "application/json;charset=UTF-8")
-    public BookDetail bookDetails(@RequestParam(value = "id") Long id, HttpServletResponse response) {
+    public Book bookDetails(@RequestParam(value = "id") Long id, HttpServletResponse response) {
 
         response.addHeader("Access-Control-Allow-Origin", "*");
         return bookdetailrepo.findById(id).get();
