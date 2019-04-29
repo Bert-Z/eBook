@@ -2,7 +2,7 @@
   <div class="allordertable">
     <Card>
       <label>All Orders</label>
-      <Table border :columns="columns4" :data="data"></Table>
+      <Table border :columns="columns" :data="data"></Table>
     </Card>
   </div>
 </template>
@@ -12,81 +12,55 @@
     name: "AllOrderTable",
     data: function () {
       return {
-        columns4: [
+        columns: [
           {
-            title: 'Name',
-            key: 'name'
+            title: 'Bookid',
+            key: 'booktitle'
           },
           {
-            title: 'Age',
-            key: 'age'
+            title: 'BuyNum',
+            key: 'booknum'
           },
           {
-            title: 'Address',
-            key: 'address'
-          },
-          {
-            title: 'Date',
-            key: 'date'
-          },
-          {
-            title: 'Action',
-            key: 'action',
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.index)
-                    }
-                  }
-                }, 'Checkout')
-              ]);
-            }
+            title: 'Time',
+            key: 'createtime'
           }
         ],
-        data: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park',
-            date: '2016-10-03'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park',
-            date: '2016-10-01'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park',
-            date: '2016-10-02'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park',
-            date: '2016-10-04'
-          }
-        ]
+        data: []
       }
     },
     methods: {
+      getAllOrders(){
+        this.$http({
+          method: 'GET',
+          url: 'http://localhost:8080/api/getAllOrders',
+          emulateJSON: true
+        }).then(
+          function (response) {
+            let info = response.data;
+            console.log(info);
+            for(let i in info){
+              let item={
+                id:info[i].id,
+                booktitle:info[i].bookid,
+                booknum:info[i].booknum,
+                createtime:info[i].createtime
+              };
+              this.data.push(item);
+            }
+          }, function (error) {
+            console.log(error);
+          })
+      },
       show(index) {
         this.$Modal.info({
           title: 'User Info',
           content: `Name：${this.data[index].name}<br>Age：${this.data[index].age}<br>Address：${this.data[index].address}`
         })
       }
+    },
+    created(){
+      this.getAllOrders();
     }
   }
 </script>
