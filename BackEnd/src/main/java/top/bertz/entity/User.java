@@ -18,6 +18,7 @@ public class User {
     private String password;
     @Column(name = "email", nullable = false)
     private String email;
+    private boolean isforbidden;
     private String nickname;
     private int genxder;
     private String phonenumber;
@@ -120,5 +121,13 @@ public class User {
 
     public void setUserorders(List<Orders> userorders) {
         this.userorders = userorders;
+    }
+
+    public boolean getIsforbidden() {
+        return isforbidden;
+    }
+
+    public void setIsforbidden(boolean isforbidden) {
+        this.isforbidden = isforbidden;
     }
 }

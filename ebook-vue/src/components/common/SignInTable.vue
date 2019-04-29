@@ -75,8 +75,10 @@
               this.$router.push({name:"Index"});
             }.bind(this),1000)
 
+          }else if(res.data===0){
+            this.$Message.error('没有找到用户!');
           }else{
-            this.$Message.error('Find user failed!');
+            this.$Message.error('用户被禁用');
           }
 
         },function(error){
