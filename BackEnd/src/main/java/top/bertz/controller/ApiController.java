@@ -1,20 +1,20 @@
 package top.bertz.controller;
 
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 import top.bertz.entity.*;
 import top.bertz.repository.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+
+import net.sf.json.JSONArray;
 
 @RestController
 @RequestMapping(value = {"/api"})
@@ -97,7 +97,7 @@ public class ApiController {
         int addnum = Integer.parseInt(request.getParameter("addnum"));
         String username = request.getParameter("username");
 
-        Carts cart=new Carts();
+        Carts cart = new Carts();
         User user = userRepository.findByName(username);
         cart.setUser(user);
 
@@ -106,13 +106,12 @@ public class ApiController {
 
         Book book = bookdetailrepo.findById(id).get();
 
-        if(cartRepository.existsByCartid(cartid)){
-            List<Book> books=cart.getBooks();
+        if (cartRepository.existsByCartid(cartid)) {
+            List<Book> books = cart.getBooks();
             books.add(book);
             cart.setBooks(books);
-        }
-        else {
-            List<Book> books=new ArrayList<Book>();
+        } else {
+            List<Book> books = new ArrayList<Book>();
             books.add(book);
             cart.setBooks(books);
         }
@@ -123,12 +122,50 @@ public class ApiController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/getcarts"}, produces = "application/json;charset=UTF-8")
-    public List<Carts> getCarts(@RequestParam(value = "username") String username,HttpServletResponse response){
+    public List<Carts> getCarts(@RequestParam(value = "username") String username, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
 
-        User user=userRepository.findByName(username);
-        List<Carts> carts=user.getUsercarts();
+        User user = userRepository.findByName(username);
+        List<Carts> carts = user.getUsercarts();
 
         return carts;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = {"/checkout"}, produces = "application/json;charset=UTF-8")
+    public int checkout(HttpServletRequest request, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
+        String username = request.getParameter("username");
+        String selrows = request.getParameter("selrows");
+//        System.out.println(selrows);
+
+        User user = userRepository.findByName(username);
+        Timestamp time = new Timestamp((new Date()).getTime());
+
+        JSONArray sels = JSONArray.fromObject(selrows);
+        for (int i = 0; i < sels.size(); i++) {
+            JSONObject item = sels.getJSONObject(0);
+            long id = Long.valueOf(String.valueOf(item.get("id")));
+            long bookid = Long.valueOf(String.valueOf(item.get("bookid")));
+            int booknum = Integer.valueOf(String.valueOf(item.get("booknum")));
+            Carts carts1 = cartRepository.findById(id).get();
+            cartRepository.delete(carts1);
+
+            Orders orders1 = new Orders();
+            orders1.setBookid(bookid);
+            orders1.setBooknum(booknum);
+            orders1.setUser(user);
+            orders1.setCreatetime(time);
+            orders1.setUpdatetime(time);
+
+            orderRepository.save(orders1);
+
+            Book b=bookdetailrepo.findById(bookid).get();
+            b.setNumber(b.getNumber()-booknum);
+            bookdetailrepo.save(b);
+
+        }
+
+        return 1;
     }
 }

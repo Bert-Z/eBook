@@ -81,7 +81,8 @@
             let info = response.data;
             for(let i in info){
               let item={
-                id:info[i].books[0].id,
+                id:info[i].id,
+                bookid:info[i].books[0].id,
                 booktitle: info[i].books[0].booktitle,
                 booknum:info[i].booknum
               };
@@ -105,7 +106,35 @@
         this.$refs.selection.selectAll(status);
       },
       checkout(){
+        // console.log(this.$refs.selection.getSelection());
+        var sel=this.$refs.selection.getSelection();
+        var selrows=JSON.stringify(sel);
+        // console.log(JSON.stringify(sel));
+        // var arr=[];
+        // for(let i in sel){
+        //   arr.push(sel[i]);
+        // }
+        // this.checks=arr;
+        // console.log(this.checks);
+        let data={'username':getCookie('name'),'selrows':selrows};
+        this.$http.post("http://localhost:8080/api/checkout",data,{emulateJSON: true}
+        ).then(function(res){
+          // console.log(res.data);
+          // console.log(this.formCustom.name);
+          if(res.data===1){
+            this.$Message.success('Success!');
+            this.$router.go(0);
 
+          }else{
+            this.$Message.error('Find user failed!');
+          }
+          console.log(res);
+
+        },function(error){
+          this.$Message.error('Fail!');
+          console.log(error);
+        })
+        // console.log(data);
       }
     },
     created(){
