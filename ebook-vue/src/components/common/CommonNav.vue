@@ -17,7 +17,8 @@
                 <img style="margin-right: 5px" src="../../assets/images/users/user.jpg" alt="user-img" width="36" class="rounded-circle">
                 <span> <b class="hidden-xs">{{name}}</b></span>
               </template>
-              <MenuItem  name="3-1" disabled>User/Manager</MenuItem>
+              <MenuItem v-if="admin"  name="3-1" disabled>Manager</MenuItem>
+              <MenuItem v-else name="3-1" disabled>User</MenuItem>
               <Divider style="margin: 0"/>
               <MenuItem  name="3-1">My Profile</MenuItem>
               <MenuItem  name="3-2">My Balance</MenuItem>
@@ -41,14 +42,17 @@
     props:["user"],
     data(){
       return {
-        name:""
+        name:"",
+        admin:0,
       }
     },
     mounted(){
       if(this.user){
         let username=getCookie('name');
+        let admin=getCookie('admin');
         this.name=username;
-        console.log(username);
+        this.admin=admin;
+        // console.log(username);
         if(username === ""){
           this.$router.push({name:"SignIn"});
         }
@@ -57,6 +61,7 @@
     methods:{
       quit:function () {
         delCookie('name');
+        delCookie('admin');
         this.$router.go(0);
       }
     }

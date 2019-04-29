@@ -34,10 +34,15 @@ public class UserController {
         String password = request.getParameter("password");
 
         if (userRepository.existsByNameAndAndPassword(name, password)) {
-            if (userRepository.findByName(name).getIsforbidden()) {
+            User user = userRepository.findByName(name);
+            if (user.getIsforbidden()) {
                 return 3;
             } else {
-                return 1;
+                if (user.isIsadmin()) {
+                    return 2;
+                } else {
+                    return 1;
+                }
             }
         } else {
             return 0;

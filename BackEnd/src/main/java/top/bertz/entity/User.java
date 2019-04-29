@@ -19,6 +19,7 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
     private boolean isforbidden;
+    private boolean isadmin;
     private String nickname;
     private int genxder;
     private String phonenumber;
@@ -129,5 +130,13 @@ public class User {
 
     public void setIsforbidden(boolean isforbidden) {
         this.isforbidden = isforbidden;
+    }
+
+    public boolean isIsadmin() {
+        return isadmin;
+    }
+
+    public void setIsadmin(boolean isadmin) {
+        this.isadmin = isadmin;
     }
 }

@@ -19,7 +19,9 @@
           </Form>
           <div class="form-group m-b-0">
             <div class="col-sm-12 text-center">
-              <p>Does not have an account? <router-link class="text-danger m-l-5" :to="{name:'SignUp'}"><b>Sign Up</b></router-link></p>
+              <p>Does not have an account?
+                <router-link class="text-danger m-l-5" :to="{name:'SignUp'}"><b>Sign Up</b></router-link>
+              </p>
             </div>
           </div>
         </Card>
@@ -29,7 +31,7 @@
 </template>
 
 <script>
-  import {getCookie,setCookie} from '../../util/util'
+  import {getCookie, setCookie} from '../../util/util'
 
   export default {
     name: "SignInTable",
@@ -56,32 +58,41 @@
         }
       }
     },
-    mounted(){
-      if(getCookie("name")){
-        this.$router.push({name:"Index"});
+    mounted() {
+      if (getCookie("name")) {
+        this.$router.push({name: "Index"});
       }
     },
     methods: {
-      findUser:function(){
-        let data={"name":this.formCustom.name,"password":this.formCustom.passwd};
-        this.$http.post("http://localhost:8080/user/signin",data,{emulateJSON: true}
-).then(function(res){
+      findUser: function () {
+        let data = {"name": this.formCustom.name, "password": this.formCustom.passwd};
+        this.$http.post("http://localhost:8080/user/signin", data, {emulateJSON: true}
+        ).then(function (res) {
           // console.log(res.data);
           // console.log(this.formCustom.name);
-          if(res.data===1){
+          if (res.data === 1) {
             this.$Message.success('Success!');
-            setCookie('name', this.formCustom.name,1000*60);
-            setTimeout(function(){
-              this.$router.push({name:"Index"});
-            }.bind(this),1000)
-
-          }else if(res.data===0){
+            setCookie('admin', 0, 1000 * 60);
+            setCookie('name', this.formCustom.name, 1000 * 60);
+            setTimeout(function () {
+              this.$router.push({name: "Index"});
+            }.bind(this), 1000)
+          }
+          else if (res.data === 2) {
+            this.$Message.success('Success!');
+            setCookie('admin', 1, 1000 * 60);
+            setCookie('name', this.formCustom.name, 1000 * 60);
+            setTimeout(function () {
+              this.$router.push({name: "Index"});
+            }.bind(this), 1000)
+          }
+          else if (res.data === 0) {
             this.$Message.error('没有找到用户!');
-          }else{
+          } else {
             this.$Message.error('用户被禁用');
           }
 
-        },function(error){
+        }, function (error) {
           this.$Message.error('Fail!');
           console.log(error);
         })
