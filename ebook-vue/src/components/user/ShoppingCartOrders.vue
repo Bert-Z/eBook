@@ -100,7 +100,23 @@
         this.$router.push({name:"BookDetails",query:{id:this.data[index].id}});
       },
       remove(index) {
-        this.data.splice(index, 1);
+        // this.data.splice(index, 1);
+        var deleteitem=this.data[index];
+        // console.log(deleteitem);
+        var selrows=JSON.stringify(deleteitem);
+        console.log(selrows);
+        let data={'username':getCookie('name'),'selrows':selrows};
+        this.$http.post("http://localhost:8080/api/cartdelete",data,{emulateJSON: true}
+        ).then(function(res){
+          // console.log(res.data);
+          // console.log(this.formCustom.name);
+          this.$router.go(0);
+          // console.log(res);
+
+        },function(error){
+          this.$Message.error('Fail!');
+          console.log(error);
+        })
       },
       handleSelectAll(status) {
         this.$refs.selection.selectAll(status);
@@ -109,13 +125,6 @@
         // console.log(this.$refs.selection.getSelection());
         var sel=this.$refs.selection.getSelection();
         var selrows=JSON.stringify(sel);
-        // console.log(JSON.stringify(sel));
-        // var arr=[];
-        // for(let i in sel){
-        //   arr.push(sel[i]);
-        // }
-        // this.checks=arr;
-        // console.log(this.checks);
         let data={'username':getCookie('name'),'selrows':selrows};
         this.$http.post("http://localhost:8080/api/checkout",data,{emulateJSON: true}
         ).then(function(res){

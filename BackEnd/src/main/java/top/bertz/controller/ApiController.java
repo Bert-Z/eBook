@@ -131,6 +131,24 @@ public class ApiController {
         return carts;
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = {"/cartdelete"}, produces = "application/json;charset=UTF-8")
+    public void cartdelete(HttpServletRequest request, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
+        String username = request.getParameter("username");
+        String selrows = request.getParameter("selrows");
+
+        User user = userRepository.findByName(username);
+
+        JSONObject sels = JSONObject.fromObject(selrows);
+
+        long id = Long.valueOf(String.valueOf(sels.get("id")));
+//        System.out.println(id);
+        Carts carts1 = cartRepository.findById(id).get();
+        cartRepository.delete(carts1);
+
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = {"/checkout"}, produces = "application/json;charset=UTF-8")
     public int checkout(HttpServletRequest request, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -160,8 +178,8 @@ public class ApiController {
 
             orderRepository.save(orders1);
 
-            Book b=bookdetailrepo.findById(bookid).get();
-            b.setNumber(b.getNumber()-booknum);
+            Book b = bookdetailrepo.findById(bookid).get();
+            b.setNumber(b.getNumber() - booknum);
             bookdetailrepo.save(b);
 
         }
