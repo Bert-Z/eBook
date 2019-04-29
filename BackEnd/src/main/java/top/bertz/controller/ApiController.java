@@ -188,8 +188,10 @@ public class ApiController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = {"/getAllOrders"}, produces = "application/json;charset=UTF-8")
-    public Iterable<Orders> getAllOrders(HttpServletResponse response) {
+    public Iterable<Orders> getAllOrders(@RequestParam(value = "username") String username, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
-        return orderRepository.findAll();
+        User user=userRepository.findByName(username);
+
+        return user.getUserorders();
     }
 }

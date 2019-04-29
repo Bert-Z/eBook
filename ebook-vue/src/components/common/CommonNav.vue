@@ -20,8 +20,8 @@
               <MenuItem v-if="admin"  name="3-1" disabled>Manager</MenuItem>
               <MenuItem v-else name="3-1" disabled>User</MenuItem>
               <Divider style="margin: 0"/>
-              <MenuItem  name="3-1">My Profile</MenuItem>
-              <MenuItem  name="3-2">My Balance</MenuItem>
+              <MenuItem  name="3-1" :to="{name:'ShoppingCart'}">My Shopping Cart</MenuItem>
+              <MenuItem  name="3-2" :to="{name:'AllOrders'}">My Orders</MenuItem>
               <Divider style="margin: 0"/>
               <MenuItem  name="3-3">Account Setting</MenuItem>
               <Divider style="margin: 0"/>
