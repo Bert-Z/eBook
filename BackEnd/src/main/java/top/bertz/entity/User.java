@@ -139,4 +139,5 @@ public class User {
     public void setIsadmin(boolean isadmin) {
         this.isadmin = isadmin;
     }
+
 }

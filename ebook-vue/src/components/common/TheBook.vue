@@ -109,7 +109,7 @@
         })
       },
       buynow: function () {
-        let data = {"id": this.id, "buynum": this.buynum,"username":getCookie('name')};
+        let data = {"id": this.id, "buynum": this.buynum,"booktitle":this.title,"bookfee":this.bookfee,"username":getCookie('name')};
         this.$http.post('http://localhost:8080/api/buynow', data, {emulateJSON: true}
         ).then(function (res) {
           if (res.data === 1) {

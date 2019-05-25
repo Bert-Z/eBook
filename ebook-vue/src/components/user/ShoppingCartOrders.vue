@@ -40,6 +40,10 @@
             key: 'booknum'
           },
           {
+            title: 'Unit Price',
+            key: 'bookfee'
+          },
+          {
             title: 'Action',
             key: 'action',
             align: 'center',
@@ -91,6 +95,7 @@
                 bookid:info[i].books[0].id,
                 booktitle: info[i].books[0].booktitle,
                 num:info[i].books[0].number,
+                bookfee:info[i].books[0].bookfee,
                 booknum:info[i].booknum
               };
               if(info[i].books[0].number<info[i].booknum){
@@ -137,6 +142,7 @@
         var sel=this.$refs.selection.getSelection();
         var selrows=JSON.stringify(sel);
         let data={'username':getCookie('name'),'selrows':selrows};
+        // console.log(selrows);
         this.$http.post("http://localhost:8080/api/checkout",data,{emulateJSON: true}
         ).then(function(res){
           // console.log(res.data);

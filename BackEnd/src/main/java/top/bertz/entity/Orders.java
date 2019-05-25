@@ -16,12 +16,20 @@ public class Orders {
     private Long orderid;
     private Long bookid;
     private int booknum;
+    private String booktitle;
+    private double bookfee;
+    private Boolean checked;
 
     @CreatedDate
     private Timestamp createtime;
 
     @LastModifiedDate
     private Timestamp updatetime;
+
+//    @OneToOne(cascade = {}, optional = false)
+//    @JoinColumn(name = "bookid")
+//    @JsonIgnoreProperties("orders")
+//    private Book book;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user_id")
@@ -85,5 +93,29 @@ public class Orders {
 
     public void setUpdatetime(Timestamp updatetime) {
         this.updatetime = updatetime;
+    }
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
+    }
+
+    public String getBooktitle() {
+        return booktitle;
+    }
+
+    public void setBooktitle(String booktitle) {
+        this.booktitle = booktitle;
+    }
+
+    public double getBookfee() {
+        return bookfee;
+    }
+
+    public void setBookfee(double bookfee) {
+        this.bookfee = bookfee;
     }
 }
