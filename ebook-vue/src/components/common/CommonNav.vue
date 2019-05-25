@@ -17,8 +17,8 @@
                 <img style="margin-right: 5px" src="../../assets/images/users/user.jpg" alt="user-img" width="36" class="rounded-circle">
                 <span> <b class="hidden-xs">{{name}}</b></span>
               </template>
-              <MenuItem v-if="admin"  name="3-1" disabled>Manager</MenuItem>
-              <MenuItem v-else name="3-1" disabled>User</MenuItem>
+              <MenuItem v-if="admin==='1'"  name="3-1" disabled>Manager</MenuItem>
+              <MenuItem v-if="admin==='0'" name="3-1" disabled>User</MenuItem>
               <Divider style="margin: 0"/>
               <MenuItem  name="3-1" :to="{name:'ShoppingCart'}">My Shopping Cart</MenuItem>
               <MenuItem  name="3-2" :to="{name:'AllOrders'}">My Orders</MenuItem>

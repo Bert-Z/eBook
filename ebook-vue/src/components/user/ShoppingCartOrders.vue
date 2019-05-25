@@ -7,7 +7,7 @@
       <div style="text-align: right">
         <Button @click="handleSelectAll(true)">Set all selected</Button>
         <Button @click="handleSelectAll(false)">Cancel all selected</Button>
-        <Button @click="checkout(false)">Checkout</Button>
+        <Button v-if="checks" @click="checkout(false)">Checkout</Button>
       </div>
     </Card>
   </div>
@@ -20,6 +20,7 @@
     name: "ShoppingCartOrders",
     data: function () {
       return {
+        checks:true,
         columns4: [
           {
             type: 'selection',
@@ -29,6 +30,10 @@
           {
             title: 'Title',
             key: 'booktitle'
+          },
+          {
+            title: 'Remains',
+            key: 'num'
           },
           {
             title: 'Numbers',
@@ -79,13 +84,19 @@
         }).then(
           function (response) {
             let info = response.data;
+            this.checks=true;
             for(let i in info){
               let item={
                 id:info[i].id,
                 bookid:info[i].books[0].id,
                 booktitle: info[i].books[0].booktitle,
+                num:info[i].books[0].number,
                 booknum:info[i].booknum
               };
+              if(info[i].books[0].number<info[i].booknum){
+                this.$Message.error(info[i].books[0].booktitle+" error!");
+                this.checks=false;
+              }
               this.data.push(item);
             }
           }, function (error) {
@@ -97,7 +108,7 @@
         //   title: 'User Info',
         //   content: `Name：${this.data[index].name}<br>Age：${this.data[index].age}<br>Address：${this.data[index].address}`
         // })
-        this.$router.push({name:"BookDetails",query:{id:this.data[index].id}});
+        this.$router.push({name:"BookDetails",query:{id:this.data[index].bookid}});
       },
       remove(index) {
         // this.data.splice(index, 1);
