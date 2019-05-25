@@ -26,13 +26,32 @@
         startTime: "",
         endTime: "",
         columns: [
+          // {
+          //   type: 'expand',
+          //   width: 50,
+          //   render: (h, params) => {
+          //       return h(expandRow, {
+          //           props: {
+          //               row: params.row
+          //           }
+          //       })
+          //   }
+          // },
           {
-            title: 'Bookid',
+            title:"OrderID",
+            key:"orderid",
+          },
+          {
+            title: 'Book',
             key: 'booktitle'
           },
           {
             title: 'BuyNum',
             key: 'booknum'
+          },
+          {
+            title:"Unit Price",
+            key:"bookfee"
           },
           {
             title: 'Time',
@@ -78,10 +97,11 @@
             // console.log(info);
             for (let i in info) {
               let item = {
-                id: info[i].id,
-                booktitle: info[i].bookid,
+                orderid: info[i].orderid,
+                booktitle: info[i].booktitle,
                 booknum: info[i].booknum,
-                createtime: info[i].createtime
+                bookfee:info[i].bookfee,
+                createtime: info[i].updatetime
               };
               this.data.push(item);
             }

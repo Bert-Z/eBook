@@ -268,6 +268,7 @@ public class ApiController {
             Orders orders = orderRepository.findById(id).get();
             orders.setOrderid(max_orderid + 1);
             orders.setChecked(1);
+            orders.setUpdatetime(time);
             orderRepository.save(orders);
 
             Book b = bookdetailrepo.findById(bookid).get();
