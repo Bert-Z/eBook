@@ -12,7 +12,7 @@
       </div>
       <Divider></Divider>
       <label>Consignee</label>
-      <Table border :columns="consignee" :data="info"></Table>
+      <Table id="ordertable" border :columns="consignee" :data="info"></Table>
       <Divider></Divider>
       <div style="text-align: right">
         <label style="color: red">Total Amount:</label>
@@ -22,7 +22,7 @@
       <Row>
         <Col offset="21" span="3">
           <Button size="large" >Cancel</Button>
-          <Button size="large" type="error">PayNow</Button>
+          <Button size="large" type="error" @click="paynow">PayNow</Button>
         </Col>
       </Row>
     </Card>
@@ -44,10 +44,6 @@
           {
             title: 'Unit Price',
             key: 'Bookfee'
-          },
-          {
-            title: 'Remains',
-            key: 'num'
           },
           {
             title: 'Numbers',
@@ -126,11 +122,29 @@
         var selrows=JSON.stringify(deleteitem);
         console.log(selrows);
         let data={'username':getCookie('name'),'selrows':selrows};
-        this.$http.post("http://localhost:8080/api/cartdelete",data,{emulateJSON: true}
+        this.$http.post("http://localhost:8080/api/needPaymentDelete",data,{emulateJSON: true}
         ).then(function(res){
           // console.log(res.data);
           // console.log(this.formCustom.name);
           this.$router.go(0);
+          // console.log(res);
+
+        },function(error){
+          this.$Message.error('Fail!');
+          console.log(error);
+        })
+      },
+      paynow:function(){
+        var deleteitem=this.data;
+        var selrows=JSON.stringify(deleteitem);
+        console.log(selrows);
+        let data={'username':getCookie('name'),'selrows':selrows};
+        this.$http.post("http://localhost:8080/api/finalPayment",data,{emulateJSON: true}
+        ).then(function(res){
+          // console.log(res.data);
+          // console.log(this.formCustom.name);
+          this.$Message.success('Success!');
+          this.$router.push("/")
           // console.log(res);
 
         },function(error){
@@ -146,24 +160,20 @@
         }).then(
           function (response) {
             let info = response.data;
-            this.checks=true;
+            // this.checks=true;
             this.total=0;
+            console.log(info);
             for(let i in info){
               let item={
                 id:info[i].id,
-                bookid:info[i].books[0].id,
-                booktitle: info[i].books[0].booktitle,
-                num:info[i].books[0].number,
-                Bookfee:info[i].books[0].bookfee,
-                booknum:info[i].booknum
+                bookid:info[i].bookid,
+                booktitle: info[i].booktitle,
+                booknum:info[i].booknum,
+                Bookfee:info[i].bookfee
               };
 
-              this.total=this.total+parseFloat(info[i].booknum)*parseFloat(info[i].books[0].bookfee);
+              this.total=this.total+parseFloat(info[i].booknum)*parseFloat(info[i].bookfee);
 
-              if(info[i].books[0].number<info[i].booknum){
-                this.$Message.error(info[i].books[0].booktitle+" error!");
-                this.checks=false;
-              }
               this.data.push(item);
             }
 

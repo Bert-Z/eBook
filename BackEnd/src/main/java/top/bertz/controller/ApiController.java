@@ -58,7 +58,7 @@ public class ApiController {
     public List<Book> getRecommend(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
 
-        int random = (int)(Math.random() * 50 + 1);
+        int random = (int) (Math.random() * 50 + 1);
 
         List<Book> books = categoryRepo.findById(random).get().getBooks().subList(0, 8);
 
@@ -69,7 +69,7 @@ public class ApiController {
     public int buyNow(HttpServletRequest request, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         Long id = Long.parseLong(request.getParameter("id"));
-        String booktitle=request.getParameter("booktitle");
+        String booktitle = request.getParameter("booktitle");
         Double bookfee = Double.parseDouble(request.getParameter("bookfee"));
         int buynum = Integer.parseInt(request.getParameter("buynum"));
         String username = request.getParameter("username");
@@ -86,7 +86,7 @@ public class ApiController {
         order.setBookid(id);
         order.setBooktitle(booktitle);
         order.setBookfee(bookfee);
-        order.setChecked(true);
+        order.setChecked(0);
         order.setBooknum(buynum);
         order.setUser(user);
         order.setCreatetime(time);
@@ -156,6 +156,22 @@ public class ApiController {
 
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = {"/needPaymentDelete"}, produces = "application/json;charset=UTF-8")
+    public void needPaymentDelete(HttpServletRequest request, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
+        String username = request.getParameter("username");
+        String selrows = request.getParameter("selrows");
+
+        User user = userRepository.findByName(username);
+
+        JSONObject sels = JSONObject.fromObject(selrows);
+        long id = Long.valueOf(String.valueOf(sels.get("id")));
+        Orders orders = orderRepository.findById(id).get();
+        orderRepository.delete(orders);
+    }
+
+
     @RequestMapping(method = RequestMethod.POST, value = {"/checkout"}, produces = "application/json;charset=UTF-8")
     public int checkout(HttpServletRequest request, HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
@@ -169,10 +185,10 @@ public class ApiController {
 
         JSONArray sels = JSONArray.fromObject(selrows);
         for (int i = 0; i < sels.size(); i++) {
-            JSONObject item = sels.getJSONObject(0);
+            JSONObject item = sels.getJSONObject(i);
             long id = Long.valueOf(String.valueOf(item.get("id")));
-            String booktitle=String.valueOf(item.get("booktitle"));
-            Double bookfee =Double.valueOf(String.valueOf(item.get("bookfee")));
+            String booktitle = String.valueOf(item.get("booktitle"));
+            Double bookfee = Double.valueOf(String.valueOf(item.get("bookfee")));
             long bookid = Long.valueOf(String.valueOf(item.get("bookid")));
             int booknum = Integer.valueOf(String.valueOf(item.get("booknum")));
             Carts carts1 = cartRepository.findById(id).get();
@@ -183,15 +199,12 @@ public class ApiController {
             orders1.setBookfee(bookfee);
             orders1.setBooktitle(booktitle);
             orders1.setBooknum(booknum);
+            orders1.setChecked(0);
             orders1.setUser(user);
             orders1.setCreatetime(time);
             orders1.setUpdatetime(time);
 
             orderRepository.save(orders1);
-
-            Book b = bookdetailrepo.findById(bookid).get();
-            b.setNumber(b.getNumber() - booknum);
-            bookdetailrepo.save(b);
 
         }
 
@@ -215,10 +228,53 @@ public class ApiController {
         List<Orders> retOrders = new ArrayList<Orders>();
 
         for (Orders i : allorders) {
-            if (i.getChecked() == false) {
+            if (i.getChecked() == 0) {
                 retOrders.add(i);
             }
+//            System.out.println(i.getBookid());
+//            System.out.println(i.getChecked());
         }
         return retOrders;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = {"/finalPayment"}, produces = "application/json;charset=UTF-8")
+    public void finalPayment(HttpServletRequest request, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
+        Long max_orderid = orderRepository.findFirstByOrderByOrderidDesc().getOrderid();
+//        System.out.println(max_orderid);
+        if(max_orderid==null){
+            max_orderid=0L;
+        }
+//        System.out.println(max_orderid);
+        String username = request.getParameter("username");
+        User user = userRepository.findByName(username);
+
+        String selrows = request.getParameter("selrows");
+
+        Timestamp time = new Timestamp((new Date()).getTime());
+
+        JSONArray sels = JSONArray.fromObject(selrows);
+
+        for (int i = 0; i < sels.size(); i++) {
+            JSONObject item = sels.getJSONObject(i);
+            long id = Long.valueOf(String.valueOf(item.get("id")));
+            long bookid = Long.valueOf(String.valueOf(item.get("bookid")));
+            int booknum = Integer.valueOf(String.valueOf(item.get("booknum")));
+//            System.out.println(id);
+//            System.out.println(bookid);
+//            System.out.println(booknum);
+
+            Orders orders = orderRepository.findById(id).get();
+            orders.setOrderid(max_orderid + 1);
+            orders.setChecked(1);
+            orderRepository.save(orders);
+
+            Book b = bookdetailrepo.findById(bookid).get();
+            b.setNumber(b.getNumber() - booknum);
+            bookdetailrepo.save(b);
+
+        }
+
     }
 }

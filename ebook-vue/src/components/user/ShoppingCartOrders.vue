@@ -149,6 +149,7 @@
           // console.log(this.formCustom.name);
           if(res.data===1){
             this.$Message.success('Success!');
+            this.$router.push({ name: 'CheckOut'});
             this.$router.go(0);
 
           }else{

@@ -18,7 +18,7 @@ public class Orders {
     private int booknum;
     private String booktitle;
     private double bookfee;
-    private Boolean checked;
+    private int checked;
 
     @CreatedDate
     private Timestamp createtime;
@@ -95,11 +95,11 @@ public class Orders {
         this.updatetime = updatetime;
     }
 
-    public Boolean getChecked() {
+    public int getChecked() {
         return checked;
     }
 
-    public void setChecked(Boolean checked) {
+    public void setChecked(int checked) {
         this.checked = checked;
     }
 
