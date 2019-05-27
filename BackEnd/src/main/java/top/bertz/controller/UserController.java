@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import top.bertz.entity.User;
 import top.bertz.repository.UserRepository;
+import top.bertz.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping(value = {"/user"})
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @RequestMapping(value = {"signup"}, method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public void signup(HttpServletRequest request, HttpServletResponse response) {
@@ -23,8 +24,9 @@ public class UserController {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        userRepository.save(new User(name, password, email));
 
+
+        userService.signup(name,password,email);
     }
 
     @RequestMapping(value = {"signin"}, method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
@@ -33,19 +35,6 @@ public class UserController {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
 
-        if (userRepository.existsByNameAndAndPassword(name, password)) {
-            User user = userRepository.findByName(name);
-            if (user.getIsforbidden()) {
-                return 3;
-            } else {
-                if (user.isIsadmin()) {
-                    return 2;
-                } else {
-                    return 1;
-                }
-            }
-        } else {
-            return 0;
-        }
+        return userService.signin(name,password);
     }
 }
