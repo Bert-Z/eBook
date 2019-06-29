@@ -5,7 +5,7 @@
         <Card style="padding-top: 20px">
           <!--<h3 class="box-title m-b-0">Welcome</h3>-->
           <!--<Divider></Divider>-->
-          <Tabs value="name1">
+          <Tabs value="authorization">
             <TabPane label="权限管理" name="authorization">
               标签一的内容
               <authorization></authorization>

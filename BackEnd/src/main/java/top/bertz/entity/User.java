@@ -21,7 +21,7 @@ public class User {
     private boolean isforbidden;
     private boolean isadmin;
     private String nickname;
-    private int genxder;
+    private int gender;
     private String phonenumber;
     private String receiptplace;
 
@@ -85,11 +85,11 @@ public class User {
     }
 
     public int getGenxder() {
-        return genxder;
+        return gender;
     }
 
-    public void setGenxder(int genxder) {
-        this.genxder = genxder;
+    public void setGenxder(int gender) {
+        this.gender = gender;
     }
 
     public String getPhonenumber() {

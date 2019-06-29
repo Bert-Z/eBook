@@ -151,7 +151,7 @@
       },
     },
     created() {
-      this.getBookListByCategory();
+      // this.getBookListByCategory();
     },
     computed: {
       filterData: {
