@@ -1,14 +1,17 @@
 <template>
-  <div id="statistics">
-    <h4 class="page-title">Statistics</h4>
-    <br/>
-    <h5>Book Statistics</h5>
+  <div id="user statistics">
+    <h5>User Statistics</h5>
     <Row style="text-align:left">
-      <Col span="12"> 开始时间:
+      <Col span="8"> 开始时间:
         <DatePicker type="date"  @on-change="changa" v-model="startTime" placeholder="请选择开始时间"></DatePicker>
       </Col>
-      <Col span="12"> 结束时间:
+      <Col span="8"> 结束时间:
         <DatePicker type="date"  @on-change="changa" v-model="endTime" placeholder="请选择结束时间"></DatePicker>
+      </Col>
+      <Col span="8"> 用户:
+        <Select v-model="this.userorder" placeholder="Select the user" @on-change="changa">
+            <Option v-for="item in users" :value="item.name">{{item.name}}</Option>
+        </Select>
       </Col>
     </Row>
     <GChart
@@ -16,26 +19,23 @@
       :data="filterData"
       :options="chartOptions"
     />
-
-    <br/>
-    <UserStatistics></UserStatistics>
   </div>
 </template>
 
 <script>
   import {GChart} from "vue-google-charts";
-  import UserStatistics from "./UserStatistics";
 
   export default {
-    name: "Statistics",
+    name: "UserStatistics",
     components: {
-      GChart,UserStatistics
+      GChart
     },
     data() {
       return {
         startTime: "",
         endTime: "",
-        orders:[],
+        users:[],
+        userorder:"",
         // Array will be automatically processed with visualization.arrayToDataTable function
         chartData: [
           ["Year", "Sales", "Expenses", "Profit"],
@@ -54,6 +54,7 @@
     },
     methods: {
       changa(){
+          console.log(this.userorder);
           // let starttime = this.startTime;
           // let endtime = this.endTime;
           // let orders=this.orders;
@@ -81,15 +82,16 @@
           //   sdf.push(ret[i].booknum);
           // }
       },
-      getAllOrders: function () {
+      getAllUsers: function () {
         this.$http({
           method: "GET",
-          url: "http://localhost:8080/admin/getAllOrders",
+          url: "http://localhost:8080/admin/getAllUsers",
           emulateJSON: true
         }).then(
           function (response) {
             // console.log(response.data[1].booktitle);
-            this.orders=response.data;
+            this.users=response.data;
+            // console.log(this.users);
             
           }, function (error) {
             console.log(error);
@@ -98,7 +100,7 @@
       },
     },
     mounted() {
-      this.getAllOrders();
+      this.getAllUsers();
       this.startTime = '';
       this.endTime = '';
     },
@@ -108,34 +110,37 @@
           
           let starttime = this.startTime;
           let endtime = this.endTime;
-          let orders=this.orders;
+        //   let orders=this.user.userorders;
+        //   let orders=[];
 
-          let ret;
-          if (starttime || endtime) {
-            ret = orders.filter(function (item) {
-              return Object.keys(item).some(function () {
-                // console.log(new Date(item["createtime"]).getTime());
-                return (new Date(item["createtime"]).getTime() >= new Date(starttime).getTime()) && (new Date(item["createtime"]).getTime() <= new Date(endtime).getTime()) ;
-              })
-            })
-          } else {
-            ret = orders;
-          }
+        //   let ret;
+        //   if (starttime || endtime) {
+        //     ret = orders.filter(function (item) {
+        //       return Object.keys(item).some(function () {
+        //         // console.log(new Date(item["createtime"]).getTime());
+        //         return (new Date(item["createtime"]).getTime() >= new Date(starttime).getTime()) && (new Date(item["createtime"]).getTime() <= new Date(endtime).getTime()) ;
+        //       })
+        //     })
+        //   } else {
+        //     ret = orders;
+        //   }
 
-          this.chartData=[];
+        //   this.chartData=[];
 
-          var asd=new Array();
-          var sdf=new Array();
-          asd.push("begin-end");
-          sdf.push(starttime.toString()+'-'+endtime.toString());
-          for(let i=0;i<ret.length;i++){
-            asd.push(ret[i].booktitle);
-            sdf.push(ret[i].booknum);
-          }
+        //   var asd=new Array();
+        //   var sdf=new Array();
+        //   asd.push("begin-end");
+        //   asd.push("Total Payment")
+        //   sdf.push(starttime.toString()+'-'+endtime.toString());
+        //   let totalfee=0;
+        //   for(let i=0;i<ret.length;i++){
+        //     totalfee+=ret[i].booknum*ret[i].bookfee;
+        //   }
+        //   sdf.push(bookfee);
 
           let hello=new Array();
-          hello.push(asd);
-          hello.push(sdf);
+        //   hello.push(asd);
+        //   hello.push(sdf);
         
           return hello;
 
