@@ -1,31 +1,28 @@
 package top.bertz.controller;
 
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
 import top.bertz.entity.*;
-import top.bertz.repository.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import net.sf.json.JSONArray;
+import top.bertz.service.BookService;
 import top.bertz.service.CartService;
+import top.bertz.service.CategoryService;
 import top.bertz.service.OrderService;
 
 @RestController
 @RequestMapping(value = {"/api"})
 public class ApiController {
-    @Autowired
-    CategoryRepository categoryRepo;
 
     @Autowired
-    private BookRepository bookdetailrepo;
+    private CategoryService categoryService;
+
+    @Autowired
+    private BookService bookService;
 
     @Autowired
     private CartService cartService;
@@ -36,30 +33,26 @@ public class ApiController {
     @RequestMapping(value = {"/getCategory2"}, produces = "application/json;charset=UTF-8")
     public List<Category> getCategory2(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
-        return categoryRepo.findCategory2();
+        return categoryService.getCategory2();
     }
 
     @RequestMapping(value = {"/getAllCategorys"}, produces = "application/json;charset=UTF-8")
     public Iterable<Category> getAllCaregorys(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
-        return categoryRepo.findAll();
+        return categoryService.getAll();
     }
 
     @RequestMapping(value = {"/getAllBooks"}, produces = "application/json;charset=UTF-8")
     public Iterable<Book> getAllBooks(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
-        return bookdetailrepo.findAll();
+        return bookService.getAllBooks();
     }
 
     @RequestMapping(value = {"/getRecommend"}, produces = "application/json;charset=UTF-8")
     public List<Book> getRecommend(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
 
-        int random = (int) (Math.random() * 50 + 1);
-
-        List<Book> books = categoryRepo.findById(random).get().getBooks().subList(0, 8);
-
-        return books;
+        return bookService.getRecommend();
     }
 
     @RequestMapping(method = RequestMethod.POST, value = {"/buynow"}, produces = "application/json;charset=UTF-8")
