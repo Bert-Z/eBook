@@ -89,6 +89,7 @@
           function (response) {
             let info = response.data;
             this.checks=true;
+            this.data=[];
             for(let i in info){
               let item={
                 id:info[i].id,
@@ -126,7 +127,7 @@
         ).then(function(res){
           // console.log(res.data);
           // console.log(this.formCustom.name);
-          this.$router.go(0);
+          this.getcarts();
           // console.log(res);
 
         },function(error){
@@ -150,7 +151,7 @@
           if(res.data===1){
             this.$Message.success('Success!');
             this.$router.push({ name: 'CheckOut'});
-            this.$router.go(0);
+            this.getcarts();
 
           }else{
             this.$Message.error('Find user failed!');

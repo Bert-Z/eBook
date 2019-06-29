@@ -126,7 +126,7 @@
         ).then(function(res){
           // console.log(res.data);
           // console.log(this.formCustom.name);
-          this.$router.go(0);
+          this.getcarts();
           // console.log(res);
 
         },function(error){
@@ -162,6 +162,7 @@
             let info = response.data;
             // this.checks=true;
             this.total=0;
+            this.data=[];
             console.log(info);
             for(let i in info){
               let item={
@@ -176,7 +177,7 @@
 
               this.data.push(item);
             }
-
+            this.total=this.total.toFixed(2);
             // console.log(this.total);
           }, function (error) {
             console.log(error);

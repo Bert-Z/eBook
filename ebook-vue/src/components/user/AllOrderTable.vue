@@ -40,22 +40,27 @@
           {
             title:"OrderID",
             key:"orderid",
+            sortable: true
           },
           {
             title: 'Book',
-            key: 'booktitle'
+            key: 'booktitle',
+            sortable: true
           },
           {
             title: 'BuyNum',
-            key: 'booknum'
+            key: 'booknum',
+            sortable: true
           },
           {
             title:"Unit Price",
-            key:"bookfee"
+            key:"bookfee",
+            sortable: true
           },
           {
             title: 'Time',
-            key: 'createtime'
+            key: 'createtime',
+            sortable: true
           }
         ],
         data: []
@@ -94,7 +99,7 @@
         }).then(
           function (response) {
             let info = response.data;
-            // console.log(info);
+            console.log(info);
             for (let i in info) {
               let item = {
                 orderid: info[i].orderid,

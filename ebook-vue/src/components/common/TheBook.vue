@@ -90,7 +90,12 @@
             this.description = info.description;
             this.remain = info.number;
             this.ctype = info.category.category1 + " > " + info.category.category2;
-            this.items.push({Properties: "所属分类", Detail: this.ctype});
+            if(this.items.length<6){
+              this.items.push({Properties: "所属分类", Detail: this.ctype});
+            }else{
+              this.items[5]={Properties: "所属分类", Detail: this.ctype};
+            }
+            
           }, function (error) {
             console.log(error);
           })
@@ -101,7 +106,7 @@
         ).then(function (res) {
           if (res.data === 1) {
             this.$Message.info('加购成功');
-            this.$router.go(0);
+            this.getInfos();
           } else {
             this.$Message.error('失败');
           }
@@ -117,6 +122,7 @@
           if (res.data === 1) {
             this.$Message.info('购买成功');
             this.getInfos();
+            this.$router.push({ name: 'CheckOut'});
           } else {
             this.$Message.error('失败');
           }
