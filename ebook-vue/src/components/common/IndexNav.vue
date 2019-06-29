@@ -5,7 +5,7 @@
         <template slot="title">
           <span> <b class="hidden-xs">{{name}}</b></span>
         </template>
-        <div v-for="item in value">
+        <div v-for="(item,itemindex) in value" v-if="itemindex<10">
           <MenuItem :name = "index" @click.native="goto(item[1])">{{item[0]}}</MenuItem>
         </div>
       </Submenu>
@@ -45,7 +45,6 @@
     },
     created() {
       this.getAllCategorys();
-      this.getCategory2();
     }
   }
 </script>

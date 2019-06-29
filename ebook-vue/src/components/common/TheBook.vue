@@ -4,7 +4,7 @@
       <Col span="7">
         <Card>
           <div style="text-align:center">
-            <img src="http://localhost:8080/images/books/book2.jpg">
+            <img :src="image" style="height:280px">
           </div>
         </Card>
       </Col>
@@ -57,6 +57,7 @@
         id:null,
         modal1: false,
         modal2: false,
+        image:"",
         addnum: 0,
         buynum: 0,
         title: "",
@@ -85,6 +86,7 @@
             this.id=info.id;
             this.title = info.booktitle;
             this.bookfee = info.bookfee;
+            this.image=info.image;
             this.description = info.description;
             this.remain = info.number;
             this.ctype = info.category.category1 + " > " + info.category.category2;

@@ -22,6 +22,8 @@ public class Book {
     private double discount;
     private int number;
     private String description;
+    private String auther;
+    private String image;
 
     @CreatedDate
     private Timestamp createtime;
@@ -130,5 +132,21 @@ public class Book {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getAuther() {
+        return auther;
+    }
+
+    public void setAuther(String auther) {
+        this.auther = auther;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
