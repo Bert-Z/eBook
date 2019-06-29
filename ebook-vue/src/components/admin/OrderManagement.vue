@@ -6,7 +6,7 @@
       </Col>
       <Col offset="8" span="8">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search...">
+          <input type="text" v-model="searchInput" class="form-control" placeholder="Search...">
           <b-button-group class="input-group-btn">
             <b-button>
               <Icon type="ios-search"/>
@@ -17,6 +17,15 @@
     </Row>
     <!--<Divider style="margin: 0;"></Divider>-->
     <!--<br></br>-->
+    <Row style="text-align:left">
+      <Col span="12"> 开始时间:
+        <DatePicker type="date" v-model="startTime" placeholder="请选择开始时间"></DatePicker>
+      </Col>
+      <Col span="12"> 结束时间:
+        <DatePicker type="date" v-model="endTime" placeholder="请选择结束时间"></DatePicker>
+      </Col>
+    </Row>
+    
     <Table :columns="columns" :data="filterData"></Table>
     <Page :total="dataCount" :page-size="pageSize" show-total @on-change="changepage"></Page>
   </div>
@@ -35,6 +44,8 @@
 
     data() {
       return {
+        startTime: "",
+        endTime: "",
         searchInput: "",
         ajaxHistoryData: [],
         // 初始化信息总条数
@@ -42,11 +53,6 @@
         // 每页显示多少条
         pageSize: 10,
         columns: [
-          {
-            title: 'Id',
-            key: 'id',
-            sortable: true
-          },
           {
             title: 'OrderId',
             key: 'orderid',
@@ -66,12 +72,18 @@
             title: '用户',
             key: 'user',
             sortable: true
+          },
+          {
+            title: 'Time',
+            key: 'createtime',
+            sortable: true
           }
         ],
         rows: []
       }
     },
     methods: {
+      
       mysearch() {
         // this.handleListApproveHistory(this.filterData);
       },
@@ -115,6 +127,8 @@
     },
     mounted() {
       this.getAllOrders();
+      this.startTime = '';
+      this.endTime = '';
     },
     computed: {
       filterData: {
@@ -131,7 +145,24 @@
           } else {
             items1 = this.rows;
           }
-          return items1;
+
+          let starttime = this.startTime;
+          let endtime = this.endTime;
+
+          let ret;
+          if (starttime || endtime) {
+            ret = items1.filter(function (item) {
+              return Object.keys(item).some(function () {
+                // console.log(new Date(item["createtime"]).getTime());
+                return (new Date(item["createtime"]).getTime() >= new Date(starttime).getTime()) && (new Date(item["createtime"]).getTime() <= new Date(endtime).getTime()) ;
+              })
+            })
+          } else {
+            ret = items1;
+          }
+          return ret;
+
+          // return items1;
         }
       }
     }
