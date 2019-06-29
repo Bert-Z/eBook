@@ -116,7 +116,7 @@
         ).then(function (res) {
           if (res.data === 1) {
             this.$Message.info('购买成功');
-            this.$router.go(0);
+            this.getInfos();
           } else {
             this.$Message.error('失败');
           }
