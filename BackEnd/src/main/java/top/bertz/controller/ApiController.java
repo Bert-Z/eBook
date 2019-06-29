@@ -7,6 +7,7 @@ import top.bertz.entity.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 
 import top.bertz.service.BookService;
@@ -37,7 +38,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = {"/getAllCategorys"}, produces = "application/json;charset=UTF-8")
-    public Iterable<Category> getAllCaregorys(HttpServletResponse response) {
+    public HashMap<String, List<Category>> getAllCaregorys(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         return categoryService.getAll();
     }

@@ -1,14 +1,12 @@
 <template>
   <div class="common_nav">
     <Menu mode="horizontal" theme="dark" style="width: 100%">
-      <Submenu v-for="ca in category2" v-bind:name="ca">
+      <Submenu v-for="(value,name,index) in allCategories" v-bind:name="index">
         <template slot="title">
-          <span> <b class="hidden-xs">{{ca}}</b></span>
+          <span> <b class="hidden-xs">{{name}}</b></span>
         </template>
-        <div v-for="item in allCategories">
-          <MenuItem v-if="item.category2 === ca" :name="item.category1"
-                    @click.native="goto(item.id)">{{item.category1}}
-          </MenuItem>
+        <div v-for="item in value">
+          <MenuItem :name = "index" @click.native="goto(item[1])">{{item[0]}}</MenuItem>
         </div>
       </Submenu>
     </Menu>
@@ -20,8 +18,7 @@
     name: "IndexNav",
     data() {
       return {
-        allCategories: [],
-        category2: []
+        allCategories: {},
       }
     },
     methods: {
@@ -38,21 +35,8 @@
         }).then(
           function (response) {
             this.allCategories = response.data;
-            // console.log(this.allCategories);
-          }, function (error) {
-            console.log(error);
-          }
-        )
-      },
-      getCategory2: function () {
-        this.$http({
-          method: "GET",
-          url: "http://localhost:8080/api/getCategory2",
-          emulateJSON: true
-        }).then(
-          function (response) {
-            this.category2 = response.data;
-            // console.log(this.category2);
+            // console.log(response.data);
+            console.log(this.allCategories);
           }, function (error) {
             console.log(error);
           }
