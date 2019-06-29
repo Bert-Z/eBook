@@ -32,7 +32,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<Book> getAllBooks() {
-        return (List<Book>) bookRepository.findAll();
+        return bookRepository.findAll();
     }
 
     @Override
@@ -95,4 +95,18 @@ public class AdminServiceImpl implements AdminService {
 
         return 1;
     }
+
+    @Override
+    public int deleteBook(String id) {
+        long bookid=Long.valueOf(String.valueOf(id));
+        Book book=bookRepository.findById(bookid).get();
+        bookRepository.delete(book);
+        return 1;
+    }
+
+    @Override
+    public int addBook() {
+        return 1;
+    }
+
 }

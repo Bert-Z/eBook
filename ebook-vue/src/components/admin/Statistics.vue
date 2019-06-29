@@ -1,6 +1,6 @@
 <template>
   <div id="statistics">
-    <label>User Statistics</label>
+    <h4 class="page-title">Statistics</h4>
     <GChart
       type="ColumnChart"
       :data="chartData"

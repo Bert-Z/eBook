@@ -1,9 +1,8 @@
 package top.bertz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import top.bertz.entity.Book;
 import top.bertz.entity.Orders;
 import top.bertz.entity.User;
@@ -64,4 +63,20 @@ public class AdminController {
         String selrows = request.getParameter("selrows");
         return adminService.setUsers(selrows);
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = {"/deleteBook"}, produces = "application/json;charset=UTF-8")
+    public int deleteBook(HttpServletRequest request, HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        String bookid = request.getParameter("bookid");
+        return adminService.deleteBook(bookid);
+    }
+
+//    @RequestMapping(method = RequestMethod.POST, value = {"/addBook"}, produces = "application/json;charset=UTF-8")
+//    public int addBook(@RequestParam("bookimage") MultipartFile bookimage, HttpServletRequest request, HttpServletResponse response) {
+//
+//        response.addHeader("Access-Control-Allow-Origin", "*");
+//        System.out.println(bookimage.getName());
+////        String bookid = request.getParameter("bookid");
+//        return 1;
+//    }
 }

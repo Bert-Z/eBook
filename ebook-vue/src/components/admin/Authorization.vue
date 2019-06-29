@@ -1,5 +1,6 @@
 <template>
   <div>
+  <h4 class="page-title">User List</h4>
     <Table border ref="selection" :columns="columns4" :data="data1"></Table>
     <div style="float: left">
         <Button @click="handleSelectAll(true)">Set all selected</Button>

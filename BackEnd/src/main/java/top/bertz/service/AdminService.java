@@ -14,4 +14,6 @@ public interface AdminService {
     public int permit(String users);
     public int setAdmin(String users);
     public int setUsers(String users);
+    public int deleteBook(String id);
+    public int addBook();
 }

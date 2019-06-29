@@ -17,107 +17,122 @@
     </Row>
     <!--<Divider style="margin: 0;"></Divider>-->
     <!--<br></br>-->
-    <Table :columns="columns" :data="data6"></Table>
+    <Table :columns="columns" :data="filterData"></Table>
+    <Page :total="dataCount" :page-size="pageSize" show-total @on-change="changepage"></Page>
   </div>
 </template>
 
 <script>
   import BButtonGroup from "bootstrap-vue/src/components/button-group/button-group";
+
+  let Data = {
+    "histories": []
+  };
+
   export default {
     name: "OrderManagement",
     components: {BButtonGroup},
+
     data() {
       return {
+        searchInput: "",
+        ajaxHistoryData: [],
+        // 初始化信息总条数
+        dataCount: 4,
+        // 每页显示多少条
+        pageSize: 10,
         columns: [
           {
-            title: 'Name',
-            key: 'name',
-            render: (h, params) => {
-              return h('div', [
-                h('Icon', {
-                  props: {
-                    type: 'person'
-                  }
-                }),
-                h('strong', params.row.name)
-              ]);
-            }
+            title: 'Id',
+            key: 'id',
+            sortable: true
           },
           {
-            title: 'Age',
-            key: 'age'
+            title: 'OrderId',
+            key: 'orderid',
+            sortable: true
           },
           {
-            title: 'Address',
-            key: 'address'
+            title: '书名',
+            key: 'booktitle',
+            sortable: true
           },
           {
-            title: 'Action',
-            key: 'action',
-            width: 150,
-            align: 'center',
-            render: (h, params) => {
-              return h('div', [
-                h('Button', {
-                  props: {
-                    size: 'small'
-                  },
-                  style: {
-                    marginRight: '5px'
-                  },
-                  on: {
-                    click: () => {
-                      this.show(params.index)
-                    }
-                  }
-                }, 'View'),
-                h('Button', {
-                  props: {
-                    size: 'small'
-                  },
-                  on: {
-                    click: () => {
-                      this.remove(params.index)
-                    }
-                  }
-                }, 'Delete')
-              ]);
-            }
+            title: '现价',
+            key: 'bookfee',
+            sortable: true
+          },
+          {
+            title: '用户',
+            key: 'user',
+            sortable: true
           }
         ],
-        data6: [
-          {
-            name: 'John Brown',
-            age: 18,
-            address: 'New York No. 1 Lake Park'
-          },
-          {
-            name: 'Jim Green',
-            age: 24,
-            address: 'London No. 1 Lake Park'
-          },
-          {
-            name: 'Joe Black',
-            age: 30,
-            address: 'Sydney No. 1 Lake Park'
-          },
-          {
-            name: 'Jon Snow',
-            age: 26,
-            address: 'Ottawa No. 2 Lake Park'
-          }
-        ]
+        rows: []
       }
     },
     methods: {
-      show(index) {
-        this.$Modal.info({
-          title: 'User Info',
-          content: `Name：${this.data6[index].name}<br>Age：${this.data6[index].age}<br>Address：${this.data6[index].address}`
-        })
+      mysearch() {
+        // this.handleListApproveHistory(this.filterData);
       },
-      remove(index) {
-        this.data6.splice(index, 1);
+      changepage(index) {
+        var _start = (index - 1) * this.pageSize;
+        var _end = index * this.pageSize;
+        this.rows = this.ajaxHistoryData.slice(_start, _end);
+      },
+      getAllOrders: function () {
+        this.$http({
+          method: "GET",
+          url: "http://localhost:8080/admin/getAllOrders",
+          emulateJSON: true
+        }).then(
+          function (response) {
+            // console.log(response.data[1].booktitle);
+            this.rows=[];
+            Data.histories=response.data;
+            for(let i=0;i<Data.histories.length;i++){
+              Data.histories[i].user=response.data[i].user.name;
+              // console.log(response.data[i].user.name);
+            }
+            // console.log(c);
+            this.handleListApproveHistory(Data.histories);
+          }, function (error) {
+            console.log(error);
+          }
+        )
+      },
+      handleListApproveHistory: function (Input) {
+        // 保存取到的所有数据
+        this.ajaxHistoryData = Input;
+        this.dataCount = Input.length;
+        // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
+        if (Input.length < this.pageSize) {
+          this.rows = this.ajaxHistoryData;
+        } else {
+          this.rows = this.ajaxHistoryData.slice(0, this.pageSize);
+        }
+      },
+    },
+    mounted() {
+      this.getAllOrders();
+    },
+    computed: {
+      filterData: {
+        get:function() {
+          let searchInput = this.searchInput && this.searchInput.toLowerCase();
+          let rows = this.rows;
+          let items1;
+          if (searchInput) {
+            items1 = rows.filter(function (item) {
+              return Object.keys(item).some(function (key) {
+                return String(item[key]).toLowerCase().match(searchInput)
+              })
+            })
+          } else {
+            items1 = this.rows;
+          }
+          return items1;
+        }
       }
     }
   }

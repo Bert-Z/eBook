@@ -36,35 +36,42 @@
         // 初始化信息总条数
         dataCount: 4,
         // 每页显示多少条
-        pageSize: 25,
+        pageSize: 10,
         columns: [
           {
             title: '书名',
-            key: 'booktitle'
+            key: 'booktitle',
+            sortable: true
           },
           {
             title: '类型',
-            key: 'type'
+            key: 'type',
+            sortable: true
           },
           {
             title: '现价',
-            key: 'bookfee'
+            key: 'bookfee',
+            sortable: true
           },
           {
             title: '折扣',
             key: 'discount',
+            sortable: true
           },
           {
             title: '库存',
             key: 'number',
+            sortable: true
           },
           {
             title: '上架日期',
             field: 'createtime',
+            sortable: true
           },
           {
             title: '更新日期',
             key: 'updatetime',
+            sortable: true
           },
           {
             title: 'Action',
@@ -85,7 +92,7 @@
                       this.viewdetail(params.index)
                     }
                   }
-                }, 'View'),
+                }, 'Modify'),
                 h('Button', {
                   props: {
                     size: 'small'
@@ -119,10 +126,10 @@
         var _end = index * this.pageSize;
         this.rows = this.ajaxHistoryData.slice(_start, _end);
       },
-      getBookListByCategory: function () {
+      getAllBooks: function () {
         this.$http({
           method: "GET",
-          url: "http://localhost:8080/api/getAllBooks",
+          url: "http://localhost:8080/admin/getAllBooks",
           emulateJSON: true
         }).then(
           function (response) {
@@ -136,7 +143,21 @@
         )
       },
       remove(index) {
-        this.rows.splice(index, 1);
+        // console.log(this.rows[index].id);
+        // console.log(this.rows[index].booktitle);
+        var bookid=this.rows[index].id;
+        // console.log(selrows);
+        let data={'bookid':bookid};
+        this.$http.post("http://localhost:8080/admin/deleteBook",data,{emulateJSON: true}
+        ).then(function(res){
+          this.$Message.success('Success!');
+          this.getAllBooks();
+          // console.log(res);
+
+        },function(error){
+          this.$Message.error('Delete Fail!');
+          console.log(error);
+        })
       },
       handleListApproveHistory: function (Input) {
         // 保存取到的所有数据
@@ -150,8 +171,8 @@
         }
       },
     },
-    created() {
-      // this.getBookListByCategory();
+    mounted() {
+      this.getAllBooks();
     },
     computed: {
       filterData: {
