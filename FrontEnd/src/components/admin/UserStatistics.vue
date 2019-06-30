@@ -8,9 +8,9 @@
       <Col span="8"> 结束时间:
         <DatePicker type="date"  @on-change="changa" v-model="endTime" placeholder="请选择结束时间"></DatePicker>
       </Col>
-      <Col span="8"> 用户:
-        <Select v-model="this.userorder" placeholder="Select the user" @on-change="changa">
-            <Option v-for="item in users" :value="item.name">{{item.name}}</Option>
+      <Col span="8">
+        <Select v-model="userindex" placeholder="Select the user" @on-change="changa">
+            <Option v-for="(item,index) in users" :key="index" :value="index">{{item.name}}</Option>
         </Select>
       </Col>
     </Row>
@@ -35,7 +35,7 @@
         startTime: "",
         endTime: "",
         users:[],
-        userorder:"",
+        userindex:null,
         // Array will be automatically processed with visualization.arrayToDataTable function
         chartData: [
           ["Year", "Sales", "Expenses", "Profit"],
@@ -54,33 +54,9 @@
     },
     methods: {
       changa(){
-          console.log(this.userorder);
-          // let starttime = this.startTime;
-          // let endtime = this.endTime;
-          // let orders=this.orders;
-
-          // let ret;
-          // if (starttime || endtime) {
-          //   ret = orders.filter(function (item) {
-          //     return Object.keys(item).some(function () {
-          //       // console.log(new Date(item["createtime"]).getTime());
-          //       return (new Date(item["createtime"]).getTime() >= new Date(starttime).getTime()) && (new Date(item["createtime"]).getTime() <= new Date(endtime).getTime()) ;
-          //     })
-          //   })
-          // } else {
-          //   ret = orders;
-          // }
-
-          // this.chartData=[];
-
-          // var asd=new Array();
-          // var sdf=new Array();
-          // asd.push("year");
-          // sdf.push(2019);
-          // for(let i=0;i<ret.length;i++){
-          //   asd.push(ret[i].booktitle);
-          //   sdf.push(ret[i].booknum);
-          // }
+          // console.log(this.userindex);
+          // console.log(this.users[this.userindex]);
+          
       },
       getAllUsers: function () {
         this.$http({
@@ -110,22 +86,45 @@
           
           let starttime = this.startTime;
           let endtime = this.endTime;
-        //   let orders=this.user.userorders;
+          let orders=[];
+          if(this.userindex!==null){
+            orders=this.users[this.userindex].userorders;
+          }
+          
         //   let orders=[];
 
-        //   let ret;
-        //   if (starttime || endtime) {
-        //     ret = orders.filter(function (item) {
-        //       return Object.keys(item).some(function () {
-        //         // console.log(new Date(item["createtime"]).getTime());
-        //         return (new Date(item["createtime"]).getTime() >= new Date(starttime).getTime()) && (new Date(item["createtime"]).getTime() <= new Date(endtime).getTime()) ;
-        //       })
-        //     })
-        //   } else {
-        //     ret = orders;
-        //   }
+          let ret;
+          if (starttime || endtime) {
+            ret = orders.filter(function (item) {
+              return Object.keys(item).some(function () {
+                // console.log(new Date(item["createtime"]).getTime());
+                return (new Date(item["createtime"]).getTime() >= new Date(starttime).getTime()) && (new Date(item["createtime"]).getTime() <= new Date(endtime).getTime()) ;
+              })
+            })
+          } else {
+            ret = orders;
+          }
 
-        //   this.chartData=[];
+          // console.log(typeof(ret));
+
+          let axio_display=new Array();
+          let axio_data=new Array();
+          axio_display.push("begin-end");
+          axio_display.push("Total Payment");
+          axio_data.push(starttime.toString()+'-'+endtime.toString());
+          let totalfee=0;
+          
+          // if(ret[1]!==undefined){
+          //   console.log(JSON.parse(JSON.stringify(ret[1])).booknum);
+          // }
+
+          for(let i=0;i<ret.length;i++){
+            if(ret[i]!==undefined){
+              totalfee+=JSON.parse(JSON.stringify(ret[i])).booknum*JSON.parse(JSON.stringify(ret[i])).bookfee;
+            }
+          }
+          axio_data.push(totalfee);
+          
 
         //   var asd=new Array();
         //   var sdf=new Array();
@@ -133,14 +132,14 @@
         //   asd.push("Total Payment")
         //   sdf.push(starttime.toString()+'-'+endtime.toString());
         //   let totalfee=0;
-        //   for(let i=0;i<ret.length;i++){
-        //     totalfee+=ret[i].booknum*ret[i].bookfee;
-        //   }
+          // for(let i=0;i<ret.length;i++){
+          //   totalfee+=ret[i].booknum*ret[i].bookfee;
+          // }
         //   sdf.push(bookfee);
 
           let hello=new Array();
-        //   hello.push(asd);
-        //   hello.push(sdf);
+          hello.push(axio_display);
+          hello.push(axio_data);
         
           return hello;
 
