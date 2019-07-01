@@ -122,7 +122,6 @@ public class OrderServiceImpl implements OrderService {
             Book b = bookdetailrepo.findById(bookid).get();
             b.setNumber(b.getNumber() - booknum);
             bookdetailrepo.save(b);
-
         }
 
     }

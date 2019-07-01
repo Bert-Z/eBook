@@ -28,6 +28,9 @@
             <FormItem label="Price" prop="price">
               <Input v-model="formValidate.price" placeholder="Enter the book price"></Input>
             </FormItem>
+            <FormItem label="Number" prop="number">
+              <Input v-model="formValidate.number" placeholder="Enter the book number"></Input>
+            </FormItem>
             <FormItem label="Desc" prop="desc">
               <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
                      placeholder="Enter something about the book..."></Input>
@@ -58,6 +61,7 @@
           price: null,
           cate2: '',
           cate1:[],
+          number:null,
           desc: '',
           allCategories:{},
           cate_id:''
@@ -69,15 +73,12 @@
           price: [
             {required: true, message: 'The price cannot be empty', trigger: 'blur'},
           ],
+          number: [
+            {required: true, message: 'The number cannot be empty', trigger: 'blur'},
+          ],
           author: [
             {required: true, message: 'The author cannot be empty', trigger: 'blur'},
           ],
-          // LargeCate: [
-          //   {required: true, message: 'Please select the LargeCate', trigger: 'change'}
-          // ],
-          // SmallCate: [
-          //   {required: true, message: 'Please select the SmallCate', trigger: 'change'}
-          // ],
           desc: [
             {required: true, message: 'Please enter a personal introduction', trigger: 'blur'},
           ]
@@ -86,22 +87,45 @@
     },
     methods: {
       handleSubmit(name) {
-        // this.$refs[name].validate((valid) => {
-          // if (valid) {
-            let data={'bookinfo':this.formValidate,"bookimage":this.bookimage};
-            this.$http.post("http://localhost:8080/admin/addBook",data,{emulateJSON: true}
-            ).then(function(res){
-              this.$Message.success('Success!');
-              // console.log(res);
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            var reader = new FileReader();
+            reader.readAsDataURL(this.bookimage, 'UTF-8');
+            var urlData;
+            
+            var that=this;
+            reader.onload = function (e) {
+                // urlData就是对应的文件内容
+                urlData = this.result;
+                // console.log(urlData);
+                
+          
+                let uploaddata={"title":that.formValidate.title,"price":that.formValidate.price,"number":that.formValidate.number,"cate_id":that.formValidate.cate_id,"author":that.formValidate.author,"desc":that.formValidate.desc,"bookimage":urlData};
+                // console.log(uploaddata);
 
-            },function(error){
-              this.$Message.error('Delete Fail!');
-              console.log(error);
-            })
-          // } else {
-          //   this.$Message.error('Wrong Input!');
-          // }
-        // })
+
+                that.$http.post("http://localhost:8080/admin/addBook",uploaddata,{emulateJSON: true}
+                ).then(function(res){
+                  
+                  that.$Message.success('Success!');
+                  this.$router.push({ name: 'Admin'});
+                  // console.log(res);
+
+                },function(error){
+                  that.$Message.error('Delete Fail!');
+                  console.log(error);
+                })
+
+            };
+            
+            // console.log(reader.readyState);
+            // console.log(reader.result);
+            
+            
+          } else {
+            this.$Message.error('Wrong Input!');
+          }
+        })
       },
       getAllCategorys(){
         this.$http({
@@ -120,7 +144,7 @@
       },
       uploadFile(){
         this.bookimage=this.$refs.fileToUpload.files[0];
-        console.log(this.bookimage);
+        // console.log(this.bookimage);
       },
       getcate1(){
         this.formValidate.cate1=this.formValidate.allCategories[this.formValidate.cate2];

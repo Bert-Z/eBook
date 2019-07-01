@@ -15,5 +15,5 @@ public interface AdminService {
     public int setAdmin(String users);
     public int setUsers(String users);
     public int deleteBook(String id);
-    public int addBook();
+    public int addBook(String booktitle,int cate_id,String author,Float price,int number,String desc,String bookimage);
 }

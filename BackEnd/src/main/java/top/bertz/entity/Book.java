@@ -14,7 +14,9 @@ import java.util.Set;
 @Table(name = "book")
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="TestSequence")
+    //@GeneratedValue(strategy=GenerationType.IDENTITY) // MYSQL时可以这样使用自增
+    @SequenceGenerator(name = "TestSequence", sequenceName = "SEQ_Test", allocationSize=-700)
     @Column(name = "id", nullable = false)
     private Long id;
     private String booktitle;

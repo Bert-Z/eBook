@@ -31,19 +31,19 @@ public class ApiController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping(value = {"/getCategory2"}, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = {"/getCategory2"})
     public List<Category> getCategory2(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         return categoryService.getCategory2();
     }
 
-    @RequestMapping(value = {"/getAllCategorys"}, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = {"/getAllCategorys"})
     public HashMap<String, List<Category>> getAllCaregorys(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         return categoryService.getAll();
     }
 
-    @RequestMapping(value = {"/getAllBooks"}, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = {"/getAllBooks"})
     public Iterable<Book> getAllBooks(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         return bookService.getAllBooks();

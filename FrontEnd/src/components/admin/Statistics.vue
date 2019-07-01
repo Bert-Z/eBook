@@ -54,32 +54,7 @@
     },
     methods: {
       changa(){
-          // let starttime = this.startTime;
-          // let endtime = this.endTime;
-          // let orders=this.orders;
-
-          // let ret;
-          // if (starttime || endtime) {
-          //   ret = orders.filter(function (item) {
-          //     return Object.keys(item).some(function () {
-          //       // console.log(new Date(item["createtime"]).getTime());
-          //       return (new Date(item["createtime"]).getTime() >= new Date(starttime).getTime()) && (new Date(item["createtime"]).getTime() <= new Date(endtime).getTime()) ;
-          //     })
-          //   })
-          // } else {
-          //   ret = orders;
-          // }
-
-          // this.chartData=[];
-
-          // var asd=new Array();
-          // var sdf=new Array();
-          // asd.push("year");
-          // sdf.push(2019);
-          // for(let i=0;i<ret.length;i++){
-          //   asd.push(ret[i].booktitle);
-          //   sdf.push(ret[i].booknum);
-          // }
+          
       },
       getAllOrders: function () {
         this.$http({

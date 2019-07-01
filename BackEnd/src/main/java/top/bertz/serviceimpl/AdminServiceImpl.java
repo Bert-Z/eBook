@@ -4,12 +4,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.bertz.entity.Book;
-import top.bertz.entity.Orders;
-import top.bertz.entity.User;
-import top.bertz.repository.BookRepository;
-import top.bertz.repository.OrderRepository;
-import top.bertz.repository.UserRepository;
+import top.bertz.entity.*;
+import top.bertz.repository.*;
 import top.bertz.service.AdminService;
 
 import java.util.List;
@@ -24,6 +20,12 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private BookImageRepository bookImageRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -46,7 +48,7 @@ public class AdminServiceImpl implements AdminService {
         for (int i = 0; i < sels.size(); i++) {
             JSONObject item = sels.getJSONObject(i);
             long id = Long.valueOf(String.valueOf(item.get("id")));
-            User user=userRepository.findById(id).get();
+            User user = userRepository.findById(id).get();
             user.setIsforbidden(true);
             userRepository.save(user);
         }
@@ -60,7 +62,7 @@ public class AdminServiceImpl implements AdminService {
         for (int i = 0; i < sels.size(); i++) {
             JSONObject item = sels.getJSONObject(i);
             long id = Long.valueOf(String.valueOf(item.get("id")));
-            User user=userRepository.findById(id).get();
+            User user = userRepository.findById(id).get();
             user.setIsforbidden(false);
             userRepository.save(user);
         }
@@ -74,7 +76,7 @@ public class AdminServiceImpl implements AdminService {
         for (int i = 0; i < sels.size(); i++) {
             JSONObject item = sels.getJSONObject(i);
             long id = Long.valueOf(String.valueOf(item.get("id")));
-            User user=userRepository.findById(id).get();
+            User user = userRepository.findById(id).get();
             user.setIsadmin(true);
             userRepository.save(user);
         }
@@ -88,7 +90,7 @@ public class AdminServiceImpl implements AdminService {
         for (int i = 0; i < sels.size(); i++) {
             JSONObject item = sels.getJSONObject(i);
             long id = Long.valueOf(String.valueOf(item.get("id")));
-            User user=userRepository.findById(id).get();
+            User user = userRepository.findById(id).get();
             user.setIsadmin(false);
             userRepository.save(user);
         }
@@ -98,14 +100,29 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int deleteBook(String id) {
-        long bookid=Long.valueOf(String.valueOf(id));
-        Book book=bookRepository.findById(bookid).get();
+        long bookid = Long.valueOf(String.valueOf(id));
+        Book book = bookRepository.findById(bookid).get();
         bookRepository.delete(book);
         return 1;
     }
 
     @Override
-    public int addBook() {
+    public int addBook(String booktitle, int cate_id, String author, Float price, int number, String desc, String bookimage) {
+        Book book=new Book(booktitle,price,desc);
+        book.setAuther(author);
+        book.setNumber(number);
+        Category category=categoryRepository.findById(cate_id).get();
+        book.setCategory(category);
+        bookRepository.save(book);
+
+        BookImage bookImage=new BookImage();
+        bookImage.setBooktitle(booktitle);
+        bookImage.setBookimage(bookimage);
+
+//        System.out.println(bookImage);
+
+        bookImageRepository.save(bookImage);
+
         return 1;
     }
 

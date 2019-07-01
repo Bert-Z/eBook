@@ -71,12 +71,23 @@ public class AdminController {
         return adminService.deleteBook(bookid);
     }
 
-//    @RequestMapping(method = RequestMethod.POST, value = {"/addBook"}, produces = "application/json;charset=UTF-8")
-//    public int addBook(@RequestParam("bookimage") MultipartFile bookimage, HttpServletRequest request, HttpServletResponse response) {
-//
-//        response.addHeader("Access-Control-Allow-Origin", "*");
-//        System.out.println(bookimage.getName());
-////        String bookid = request.getParameter("bookid");
-//        return 1;
-//    }
+    @RequestMapping(method = RequestMethod.POST, value = {"/addBook"}, produces = "application/json;charset=UTF-8")
+    public int addBook(HttpServletRequest request, HttpServletResponse response) {
+
+        response.addHeader("Access-Control-Allow-Origin", "*");
+
+//        String bookinfo=request.getParameter("bookinfo");
+        String title=request.getParameter("title");
+
+        float price=Float.valueOf(String.valueOf(request.getParameter("price")));
+        int number=Integer.valueOf(String.valueOf(request.getParameter("number")));
+        int cate_id=Integer.valueOf(String.valueOf(request.getParameter("cate_id")));
+
+        String author=request.getParameter("author");
+        String desc=request.getParameter("desc");
+        String bookimage=request.getParameter("bookimage");
+//        System.out.println());
+
+        return adminService.addBook(title,cate_id,author,price,number,desc,bookimage);
+    }
 }
