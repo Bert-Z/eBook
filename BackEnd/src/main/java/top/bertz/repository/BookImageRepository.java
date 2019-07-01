@@ -4,4 +4,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import top.bertz.entity.BookImage;
 
 public interface BookImageRepository extends MongoRepository<BookImage,String> {
+    public BookImage findFirstByBooktitle(String Booktitle);
 }
