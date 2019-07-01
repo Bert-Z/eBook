@@ -92,7 +92,20 @@
                       this.viewdetail(params.index)
                     }
                   }
-                }, 'Modify'),
+                }, 'view'),
+                h('Button', {
+                  props: {
+                    size: 'small'
+                  },
+                  style: {
+                    marginRight: '5px'
+                  },
+                  on: {
+                    click: () => {
+                      this.modifydetail(params.index)
+                    }
+                  }
+                }, 'modify'),
                 h('Button', {
                   props: {
                     size: 'small'
@@ -120,6 +133,10 @@
         //   content: `Name：${this.rows[index].name}<br>id：${this.rows[index].id}<br>Address：${this.rows[index].address}`
         // })
         this.$router.push({name:'BookDetails',query:{id:this.rows[index].id}});
+      },
+      modifydetail:function(index) {
+        
+        this.$router.push({name:'editbook',query:{id:this.rows[index].id}});
       },
       changepage(index) {
         var _start = (index - 1) * this.pageSize;

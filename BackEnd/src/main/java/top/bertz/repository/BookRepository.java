@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface BookRepository extends CrudRepository<Book,Long> {
     public List<Book> findAll();
+    public Book findFirstByBooktitle(String booktitle);
 }

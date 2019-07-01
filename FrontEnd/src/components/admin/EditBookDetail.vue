@@ -19,8 +19,7 @@
               <Select v-model="formValidate.cate_id" placeholder="Select the book SmallCate">
                 <Option v-for="item in formValidate.cate1" :key="item[1]" :value="item[1]">{{item[0]}}</Option>
               </Select>
-            </FormItem>
-          
+            </FormItem>  
 
             <FormItem label="Author" prop="author">
               <Input v-model="formValidate.author" placeholder="Enter the book author"></Input>
@@ -86,6 +85,25 @@
       }
     },
     methods: {
+      getInfos: function () {
+        this.$http({
+          method: 'GET',
+          url: 'http://localhost:8080/ebook/bookdetails?id=' + this.$route.query.id,
+          emulateJSON: true
+        }).then(
+          function (response) {
+            let info = response.data;
+            this.formValidate.title = info.booktitle;
+            this.formValidate.price = info.bookfee;
+            this.formValidate.desc = info.description;
+            this.formValidate.number = info.number;
+            this.formValidate.cate_id = info.category.id;
+            this.formValidate.author=info.auther;
+            
+          }, function (error) {
+            console.log(error);
+          })
+      },
       handleSubmit(name) {
         this.$refs[name].validate((valid) => {
           if (valid) {
@@ -155,6 +173,9 @@
     },
   
     created (){
+      if(this.$route.query.id!==null){
+        this.getInfos();
+      }
       this.getAllCategorys();
     },  
   }

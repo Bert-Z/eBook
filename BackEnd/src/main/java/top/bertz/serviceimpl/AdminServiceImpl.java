@@ -108,20 +108,37 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public int addBook(String booktitle, int cate_id, String author, Float price, int number, String desc, String bookimage) {
-        Book book=new Book(booktitle,price,desc);
-        book.setAuther(author);
-        book.setNumber(number);
-        Category category=categoryRepository.findById(cate_id).get();
-        book.setCategory(category);
-        bookRepository.save(book);
+        try{
+            Book book=bookRepository.findFirstByBooktitle(booktitle);
+            Category category=categoryRepository.findById(cate_id).get();
+            book.setCategory(category);
+            book.setAuther(author);
+            book.setNumber(number);
+            book.setBookfee(price);
+            book.setDescription(desc);
+            bookRepository.save(book);
 
-        BookImage bookImage=new BookImage();
-        bookImage.setBooktitle(booktitle);
-        bookImage.setBookimage(bookimage);
+        }
+        catch (Exception e){
+            Book book=new Book(booktitle,price,desc);
+            book.setAuther(author);
+            book.setNumber(number);
+            Category category=categoryRepository.findById(cate_id).get();
+            book.setCategory(category);
+            bookRepository.save(book);
+        }
 
-//        System.out.println(bookImage);
-
-        bookImageRepository.save(bookImage);
+        try{
+            BookImage bookImage=bookImageRepository.findFirstByBooktitle(booktitle);
+            bookImage.setBookimage(bookimage);
+            bookImageRepository.save(bookImage);
+        }
+        catch (Exception e){
+            BookImage bookImage=new BookImage();
+            bookImage.setBooktitle(booktitle);
+            bookImage.setBookimage(bookimage);
+            bookImageRepository.save(bookImage);
+        }
 
         return 1;
     }
