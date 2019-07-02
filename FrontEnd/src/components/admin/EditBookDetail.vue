@@ -16,7 +16,7 @@
             </FormItem>
             
             <FormItem label="SmallCate" prop="SmallCate">
-              <Select v-model="formValidate.cate_id" placeholder="Select the book SmallCate">
+              <Select v-model="formValidate.cate_id" @on-change="changa" placeholder="Select the book SmallCate">
                 <Option v-for="item in formValidate.cate1" :key="item[1]" :value="item[1]">{{item[0]}}</Option>
               </Select>
             </FormItem>  
@@ -88,6 +88,9 @@
       }
     },
     methods: {
+      changa(){
+        console.log(this.formValidate.cate2);
+      },
       getInfos: function () {
         this.$http({
           method: 'GET',
@@ -102,6 +105,16 @@
             this.formValidate.number = info.number;
             this.formValidate.cate_id = info.category.id;
             this.formValidate.author=info.auther;
+            this.formValidate.cate2=info.category.category2;
+            // this.getAllCategorys();
+            for(let m in this.formValidate.allCategories){
+              console.log(m,":");
+            }
+            this.getcate1();
+            let ss=this.formValidate.cate2;
+            // console.log(this.formValidate.cate2);
+            // console.log(this.formValidate);
+            // console.log(this.formValidate);
             this.formValidate.cate2=info.category.category2;
             // this.formValidate.cate2=info.category.category2;
             this.formValidate.image=info.image;
@@ -212,6 +225,21 @@
           }
         )
       },
+      getcate1(){
+        this.$http({
+          method: "GET",
+          url: "http://localhost:8080/api/getAllCategorys",
+          emulateJSON: true
+        }).then(
+          function (response) {
+            this.formValidate.allCategories = response.data;
+            // console.log(response.data);
+            // console.log(this.formValidate.allCategories);
+          }, function (error) {
+            console.log(error);
+          }
+        )
+      },
       uploadFile(){
         this.bookimage=this.$refs.fileToUpload.files[0];
         // console.log(this.bookimage);
@@ -225,13 +253,20 @@
     },
   
     created (){
-      console.log(this.$route.query.id);
+      // console.log(this.$route.query.id);
+      // if(this.$route.query.id!==undefined){
+      //   this.id=this.$route.query.id;
+      //   this.getInfos();
+      // }
+      this.getAllCategorys();
+    },  
+    mounted() {
       if(this.$route.query.id!==undefined){
         this.id=this.$route.query.id;
         this.getInfos();
       }
-      this.getAllCategorys();
-    },  
+      // this.getAllCategorys();
+    },
   }
 </script>
 

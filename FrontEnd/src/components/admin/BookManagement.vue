@@ -18,7 +18,9 @@
     <!--<Divider style="margin: 0;"></Divider>-->
     <!--<br></br>-->
     <Table :columns="columns" :data="filterData"></Table>
+    <Button type="primary" @click="newbook">Add Book</Button>
     <Page :total="dataCount" :page-size="pageSize" show-total @on-change="changepage"></Page>
+    
   </div>
 </template>
 
@@ -124,6 +126,9 @@
       }
     },
     methods: {
+      newbook(){
+        this.$router.push({name:'editbook'});
+      },
       mysearch() {
         // this.handleListApproveHistory(this.filterData);
       },
