@@ -2,30 +2,28 @@ package top.bertz.serviceimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.bertz.dao.CategoryDao;
 import top.bertz.entity.Category;
-import top.bertz.repository.CategoryRepository;
 import top.bertz.service.CategoryService;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
     @Autowired
-    CategoryRepository categoryRepo;
+    private CategoryDao categoryDao;
 
     @Override
     public List<Category> getCategory2() {
-        return categoryRepo.findCategory2();
+        return categoryDao.findCategory2();
     }
 
     @Override
     public HashMap<String, List<Category>> getAll() {
         HashMap<String, List<Category>> ret = new HashMap<String, List<Category>>();
 
-        List<String> cate2 = categoryRepo.getAllcate2();
+        List<String> cate2 = categoryDao.getAllCategory2();
 
         String thiscate;
 
@@ -40,7 +38,7 @@ public class CategoryServiceImpl implements CategoryService {
 //            Category thisone=cate2.get(i);
 //            System.out.println(cate2.get(i) instanceof String);
 //            System.out.println(cate2.get(i));
-            ret.put(thiscate, categoryRepo.getTop10ByCategory2(thiscate));
+            ret.put(thiscate, categoryDao.getTop10ByCategory2(thiscate));
         }
 
         return ret;

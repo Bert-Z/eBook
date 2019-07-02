@@ -4,8 +4,11 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.bertz.dao.BookDao;
+import top.bertz.dao.CategoryDao;
+import top.bertz.dao.OrderDao;
+import top.bertz.dao.UserDao;
 import top.bertz.entity.*;
-import top.bertz.repository.*;
 import top.bertz.service.AdminService;
 
 import java.util.List;
@@ -13,33 +16,30 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService {
     @Autowired
-    private UserRepository userRepository;
+    private UserDao userDao;
 
     @Autowired
-    private BookRepository bookRepository;
+    private BookDao bookDao;
 
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderDao orderDao;
 
     @Autowired
-    private BookImageRepository bookImageRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryDao categoryDao;
 
     @Override
     public List<User> getAllUsers() {
-        return (List<User>) userRepository.findAll();
+        return userDao.findAll();
     }
 
     @Override
     public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+        return (List<Book>) bookDao.findAll();
     }
 
     @Override
     public List<Orders> getAllOrders() {
-        return (List<Orders>) orderRepository.findAll();
+        return orderDao.findAll();
     }
 
     @Override
@@ -48,9 +48,9 @@ public class AdminServiceImpl implements AdminService {
         for (int i = 0; i < sels.size(); i++) {
             JSONObject item = sels.getJSONObject(i);
             long id = Long.valueOf(String.valueOf(item.get("id")));
-            User user = userRepository.findById(id).get();
+            User user = userDao.findById(id);
             user.setIsforbidden(true);
-            userRepository.save(user);
+            userDao.save(user);
         }
 
         return 1;
@@ -62,9 +62,9 @@ public class AdminServiceImpl implements AdminService {
         for (int i = 0; i < sels.size(); i++) {
             JSONObject item = sels.getJSONObject(i);
             long id = Long.valueOf(String.valueOf(item.get("id")));
-            User user = userRepository.findById(id).get();
+            User user = userDao.findById(id);
             user.setIsforbidden(false);
-            userRepository.save(user);
+            userDao.save(user);
         }
 
         return 1;
@@ -76,9 +76,9 @@ public class AdminServiceImpl implements AdminService {
         for (int i = 0; i < sels.size(); i++) {
             JSONObject item = sels.getJSONObject(i);
             long id = Long.valueOf(String.valueOf(item.get("id")));
-            User user = userRepository.findById(id).get();
+            User user = userDao.findById(id);
             user.setIsadmin(true);
-            userRepository.save(user);
+            userDao.save(user);
         }
 
         return 1;
@@ -90,9 +90,9 @@ public class AdminServiceImpl implements AdminService {
         for (int i = 0; i < sels.size(); i++) {
             JSONObject item = sels.getJSONObject(i);
             long id = Long.valueOf(String.valueOf(item.get("id")));
-            User user = userRepository.findById(id).get();
+            User user = userDao.findById(id);
             user.setIsadmin(false);
-            userRepository.save(user);
+            userDao.save(user);
         }
 
         return 1;
@@ -101,8 +101,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public int deleteBook(String id) {
         long bookid = Long.valueOf(String.valueOf(id));
-        Book book = bookRepository.findById(bookid).get();
-        bookRepository.delete(book);
+        Book book = bookDao.findById(bookid);
+        bookDao.delete(book);
         return 1;
     }
 
@@ -112,34 +112,34 @@ public class AdminServiceImpl implements AdminService {
         Book book = new Book(booktitle, price, desc);
         book.setAuther(author);
         book.setNumber(number);
-        Category category = categoryRepository.findById(cate_id).get();
+        Category category = categoryDao.findById(cate_id);
         book.setCategory(category);
-        bookRepository.save(book);
+        bookDao.save(book);
 
         BookImage bookImage = new BookImage();
         bookImage.setBooktitle(booktitle);
         bookImage.setBookimage(bookimage);
-        bookImageRepository.save(bookImage);
+        bookDao.saveImage(bookImage);
 
         return 1;
     }
 
     @Override
     public int modifyBook( long id,String booktitle, int cate_id, String author, Float price, int number, String desc, String bookimage) {
-        Book book = bookRepository.findById(id).get();
-        Category category = categoryRepository.findById(cate_id).get();
+        Book book = bookDao.findById(id);
+        Category category = categoryDao.findById(cate_id);
         book.setBooktitle(booktitle);
         book.setCategory(category);
         book.setAuther(author);
         book.setNumber(number);
         book.setBookfee(price);
         book.setDescription(desc);
-        bookRepository.save(book);
+        bookDao.save(book);
 
         try{
-            BookImage bookImage = bookImageRepository.findFirstByBooktitle(booktitle);
+            BookImage bookImage = bookDao.findFirstBookImageByBooktitle(booktitle);
             bookImage.setBookimage(bookimage);
-            bookImageRepository.save(bookImage);
+            bookDao.saveImage(bookImage);
         }catch (Exception e){
 
         }
