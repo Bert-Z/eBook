@@ -38,6 +38,7 @@
               <input type="file" accept="image/*" ref="fileToUpload" name="fileToUpload" id="fileToUpload" @change="uploadFile()"/>
             </FormItem>
 
+            <img :src="formValidate.image"/>
             <FormItem>
               <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
               <Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>
@@ -54,6 +55,7 @@
     name: "EditBookDetail",
     data() {
       return {
+        id:null,
         bookimage:null,
         formValidate: {
           title: '',
@@ -63,24 +65,25 @@
           number:null,
           desc: '',
           allCategories:{},
-          cate_id:''
+          cate_id:null,
+          image:null
         },
         ruleValidate: {
-          title: [
-            {required: true, message: 'The title cannot be empty', trigger: 'blur'}
-          ],
-          price: [
-            {required: true, message: 'The price cannot be empty', trigger: 'blur'},
-          ],
-          number: [
-            {required: true, message: 'The number cannot be empty', trigger: 'blur'},
-          ],
-          author: [
-            {required: true, message: 'The author cannot be empty', trigger: 'blur'},
-          ],
-          desc: [
-            {required: true, message: 'Please enter a personal introduction', trigger: 'blur'},
-          ]
+          // title: [
+          //   {required: true, message: 'The title cannot be empty', trigger: 'blur'}
+          // ],
+          // price: [
+          //   {required: true, message: 'The price cannot be empty', trigger: 'blur'},
+          // ],
+          // number: [
+          //   {required: true, message: 'The number cannot be empty', trigger: 'blur'},
+          // ],
+          // author: [
+          //   {required: true, message: 'The author cannot be empty', trigger: 'blur'},
+          // ],
+          // desc: [
+          //   {required: true, message: 'Please enter a personal introduction', trigger: 'blur'},
+          // ]
         }
       }
     },
@@ -99,14 +102,62 @@
             this.formValidate.number = info.number;
             this.formValidate.cate_id = info.category.id;
             this.formValidate.author=info.auther;
+            this.formValidate.cate2=info.category.category2;
+            // this.formValidate.cate2=info.category.category2;
+            this.formValidate.image=info.image;
             
           }, function (error) {
             console.log(error);
           })
       },
       handleSubmit(name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
+        // this.$refs[name].validate((valid) => {
+        //   if (valid) {
+          if(this.$route.query.id!==undefined){
+            if(this.bookimage!==null){
+              var reader = new FileReader();
+              reader.readAsDataURL(this.bookimage, 'UTF-8');
+              var urlData;
+              
+              let that=this;
+              reader.onload = function (e) {
+                  // urlData就是对应的文件内容
+                  urlData = this.result;
+                  that.formValidate.image=urlData;
+                
+                  let uploaddata={"id":that.id,"title":that.formValidate.title,"price":that.formValidate.price,"number":that.formValidate.number,"cate_id":that.formValidate.cate_id,"author":that.formValidate.author,"desc":that.formValidate.desc,"bookimage":urlData};
+                  that.$http.post("http://localhost:8080/admin/modifyBook",uploaddata,{emulateJSON: true}
+                  ).then(function(res){
+                    
+                    that.$Message.success('Success!');
+                    this.$router.push({ name: 'Admin'});
+                    // console.log(res);
+
+                  },function(error){
+                    that.$Message.error('Delete Fail!');
+                    console.log(error);
+                  })
+
+              };
+
+            }else{
+              let that=this;
+
+              let uploaddata={"id":that.id,"title":that.formValidate.title,"price":that.formValidate.price,"number":that.formValidate.number,"cate_id":that.formValidate.cate_id,"author":that.formValidate.author,"desc":that.formValidate.desc,"bookimage":that.formValidate.image};
+
+              that.$http.post("http://localhost:8080/admin/modifyBook",uploaddata,{emulateJSON: true}
+              ).then(function(res){
+                
+                that.$Message.success('Success!');
+                this.$router.push({ name: 'Admin'});
+                // console.log(res);
+
+              },function(error){
+                that.$Message.error('Delete Fail!');
+                console.log(error);
+              })
+            }
+          }else{
             var reader = new FileReader();
             reader.readAsDataURL(this.bookimage, 'UTF-8');
             var urlData;
@@ -119,7 +170,6 @@
                 
           
                 let uploaddata={"title":that.formValidate.title,"price":that.formValidate.price,"number":that.formValidate.number,"cate_id":that.formValidate.cate_id,"author":that.formValidate.author,"desc":that.formValidate.desc,"bookimage":urlData};
-                // console.log(uploaddata);
 
 
                 that.$http.post("http://localhost:8080/admin/addBook",uploaddata,{emulateJSON: true}
@@ -135,15 +185,17 @@
                 })
 
             };
+          }
+          
             
             // console.log(reader.readyState);
             // console.log(reader.result);
             
             
-          } else {
-            this.$Message.error('Wrong Input!');
-          }
-        })
+        //   } else {
+        //     this.$Message.error('Wrong Input!');
+        //   }
+        // })
       },
       getAllCategorys(){
         this.$http({
@@ -173,7 +225,9 @@
     },
   
     created (){
-      if(this.$route.query.id!==null){
+      console.log(this.$route.query.id);
+      if(this.$route.query.id!==undefined){
+        this.id=this.$route.query.id;
         this.getInfos();
       }
       this.getAllCategorys();
